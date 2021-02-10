@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary record detail</title>
+</head>
+<body>
+    <h1>Detail of record #{{ object.pk }}</h1>
+    First name: {{ object.first_name }}<br>
+    Last name: {{ object.last_name }}<br>
+    Country: {{ object.country }}<br>
+    Date of birth: {{ object.date_of_birth }}<br><br>
+    <a href="{% url 'dict-view' %}">Main page</a>
+</body>
+</html>

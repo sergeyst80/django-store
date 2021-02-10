@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionares</title>
+</head>
+<body>
+    <table border="1px"">
+        <caption style="font-size: 16pt; font: bold;">Dictionary: "Authors"</caption>
+        <tr>
+            <th>PK</th>
+            <th>Firs name</th>
+            <th>Last name</th>
+            <th>Country</th>
+            <th>Date of birth</th>
+            <th>Actions</th>
+        </tr>
+        {% for author in object %}
+        <tr>
+            <td>{{ author.pk }}</td>
+            <td>{{ author.first_name }}</td>
+            <td>{{ author.last_name }}</td>
+            <td>{{ author.country }}</td>
+            <td>{{ author.date_of_birth }}</td>
+            <td>
+                <a href="{% url 'dict-detail' author.pk %}">Detail</a>
+                <a href="{% url 'dict-update' author.pk %}">Update</a>
+                <a href="{% url 'dict-delete' author.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

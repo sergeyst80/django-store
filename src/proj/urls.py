@@ -15,10 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from dictionaries.views import dicts_page
+from dictionaries import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', dicts_page)
+    path('', views.dict_view, name='dict-view'),
+    path('dict-detail/<int:pk>', views.dict_detail, name='dict-detail'),
+    path('dict-update/<int:pk>', views.dict_update, name='dict-update'),
+    path('dict-delete/<int:pk>', views.dict_delete, name='dict-delete')
+    # path('dict_view/<str:dict_name>/', views.dict_view, name='dict-view')
+    # path('', dicts_page)
+    # path('', dicts_page)
 ]

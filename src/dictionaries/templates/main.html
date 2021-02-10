@@ -6,82 +6,8 @@
     <title>Dictionares</title>
 </head>
 <body>
-    <table border="1px" style="width: 800px; border-spacing: 0ch; text-align: center;">
-        <caption style="font-size: 16pt; font: bold;">Dictionary: "Authors"</caption>
-        <tr style="background-color: black; color: white;">
-            <th>PK</th>
-            <th>Firs name</th>
-            <th>Last name</th>
-            <th>Country</th>
-            <th>Date of birth</th>
-        </tr>
-        {% for author in authors %}
-        <tr style="background-color: silver;">
-            <td style="color: white; background-color: black;">{{ author.pk }}</td>
-            <td>{{ author.first_name }}</td>
-            <td>{{ author.last_name }}</td>
-            <td>{{ author.country }}</td>
-            <td>{{ author.date_of_birth }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <table border="1px" style="width: 500px; border-spacing: 0ch; text-align: center;">
-        <caption style="font-size: 16pt; font: bold;">Dictionary: "Countries"</caption>
-        <tr style="background-color: black; color: white;">
-            <th>PK</th>
-            <th>Name</th>
-        </tr>
-        {% for country in countries %}
-        <tr style="background-color: silver;">
-            <td style="color: white; background-color: black;">{{ country.pk }}</td>
-            <td>{{ country.name }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <table border="1px" style="width: 500px; border-spacing: 0ch; text-align: center;">
-        <caption style="font-size: 16pt; font: bold;">Dictionary: "Genres"</caption>
-        <tr style="background-color: black; color: white;">
-            <th>PK</th>
-            <th>Name</th>
-        </tr>
-        {% for genre in genres %}
-        <tr style="background-color: silver;">
-            <td style="color: white; background-color: black;">{{ genre.pk }}</td>
-            <td>{{ genre.name }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <table border="1px" style="width: 500px; border-spacing: 0ch; text-align: center;">
-        <caption style="font-size: 16pt; font: bold;">Dictionary: "Series"</caption>
-        <tr style="background-color: black; color: white;">
-            <th>PK</th>
-            <th>Name</th>
-        </tr>
-        {% for ser in series %}
-        <tr style="background-color: silver;">
-            <td style="color: white; background-color: black;">{{ ser.pk }}</td>
-            <td>{{ ser.name }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <table border="1px" style="width: 600px; border-spacing: 0ch; text-align: center;">
-        <caption style="font-size: 16pt; font: bold;">Dictionary: "Publishers"</caption>
-        <tr style="background-color: black; color: white;">
-            <th>PK</th>
-            <th>Name</th>
-            <th>Country</th>
-        </tr>
-        {% for publisher in publishers %}
-        <tr style="background-color: silver;">
-            <td style="color: white; background-color: black;">{{ publisher.pk }}</td>
-            <td>{{ publisher.name }}</td>
-            <td>{{ publisher.country }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    
+    <a href="{% url 'dict-view' models_dict.key %}">View dict {{ models_dict.key }}</a>
+    
 </body>
 </html>
