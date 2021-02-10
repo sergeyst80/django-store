@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dictionares</title>
+    <title>Dictionary Author</title>
 </head>
 <body>
     <table border="1px"">
@@ -31,5 +31,7 @@
         </tr>
         {% endfor %}
     </table>
+    <br>
+    <a href="{% url 'dict-add' %}">Add record</a>
 </body>
 </html>

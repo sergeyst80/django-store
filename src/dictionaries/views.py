@@ -36,4 +36,9 @@ def dict_update(request, pk):
 
 def dict_delete(request, pk):
     context = {'object': models.Authors.objects.get(pk=pk)}
-    return render(request, template_name='dict_detail.html', context=context)
+    models.Authors.objects.get(pk=pk).delete()
+    return render(request, template_name='dict_delete.html', context=context)
+
+def dict_add(request):
+    context = {'object': models.Authors.objects.all()} 
+    return render(request, template_name='dict_view.html', context=context)
