@@ -24,8 +24,6 @@ urlpatterns = [
     path('dict-detail/<int:pk>/', views.dict_detail, name='dict-detail'),
     path('dict-update/<int:pk>/', views.dict_update, name='dict-update'),
     path('dict-delete/<int:pk>/', views.dict_delete, name='dict-delete'),
-    path('dict-add/', views.dict_add, name='dict-add')
-    # path('dict_view/<str:dict_name>/', views.dict_view, name='dict-view')
-    # path('', dicts_page)
-    # path('', dicts_page)
+    path('dict-add/', views.dict_add, name='dict-add'),
+    path('dict-update/<int:pk>/', views.dict_update, name='dict-update')
 ]

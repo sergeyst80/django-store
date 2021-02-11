@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new record</title>
+</head>
+<body>
+    {{ author.date_of_birth }}
+    <h1>Input data</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <label>First name<input type="text" name="first_name" value={{ author.first_name }}></label><br>
+        <label>Last name<input type="text" name="last_name" value={{ author.last_name }}></label><br>
+        <label>Date of birth<input type="date" name="date_of_birth"  value={{ author.date_of_birth|date:"Y-m-d" }}></label><br>
+        <button type="submit">Save</button>
+    </form>
+    <br>
+    <a href="{% url 'dict-view' %}">Main page</a>
+</body>
+</html>

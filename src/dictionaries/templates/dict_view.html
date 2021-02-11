@@ -12,8 +12,6 @@
             <th>PK</th>
             <th>Firs name</th>
             <th>Last name</th>
-            <th>Country</th>
-            <th>Date of birth</th>
             <th>Actions</th>
         </tr>
         {% for author in object %}
@@ -21,8 +19,6 @@
             <td>{{ author.pk }}</td>
             <td>{{ author.first_name }}</td>
             <td>{{ author.last_name }}</td>
-            <td>{{ author.country }}</td>
-            <td>{{ author.date_of_birth }}</td>
             <td>
                 <a href="{% url 'dict-detail' author.pk %}">Detail</a>
                 <a href="{% url 'dict-update' author.pk %}">Update</a>
@@ -32,6 +28,6 @@
         {% endfor %}
     </table>
     <br>
-    <a href="{% url 'dict-add' %}">Add record</a>
+    <a href="{% url 'dict-add' %}">Add new record</a>
 </body>
 </html>
