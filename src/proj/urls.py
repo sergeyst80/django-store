@@ -20,10 +20,9 @@ from dictionaries import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.dict_view, name='dict-view'),
-    path('dict-detail/<int:pk>/', views.dict_detail, name='dict-detail'),
-    path('dict-update/<int:pk>/', views.dict_update, name='dict-update'),
-    path('dict-delete/<int:pk>/', views.dict_delete, name='dict-delete'),
-    path('dict-add/', views.dict_add, name='dict-add'),
-    path('dict-update/<int:pk>/', views.dict_update, name='dict-update')
+    path('', views.AuthorsList.as_view(), name='authors-list'),
+    path('authors-detail/<int:pk>/', views.AuthorsDetail.as_view(), name='authors-detail'),
+    path('authors-delete/<int:pk>/', views.AuthorsDelete.as_view(), name='authors-delete'),
+    path('authors-update/<int:pk>/', views.AuthorsUpdate.as_view(), name='authors-update'),
+    path('authors-create/', views.AuthorsCreate.as_view(), name='authors-create'),
 ]

@@ -14,20 +14,20 @@
             <th>Last name</th>
             <th>Actions</th>
         </tr>
-        {% for author in object %}
+        {% for author in object_list %}
         <tr>
             <td>{{ author.pk }}</td>
             <td>{{ author.first_name }}</td>
             <td>{{ author.last_name }}</td>
             <td>
-                <a href="{% url 'dict-detail' author.pk %}">Detail</a>
-                <a href="{% url 'dict-update' author.pk %}">Update</a>
-                <a href="{% url 'dict-delete' author.pk %}">Delete</a>
+                <a href="{% url 'authors-detail' author.pk %}">Detail</a>
+                <a href="{% url 'authors-update' author.pk %}">Update</a>
+                <a href="{% url 'authors-delete' author.pk %}">Delete</a>
             </td>
         </tr>
         {% endfor %}
     </table>
     <br>
-    <a href="{% url 'dict-add' %}">Add new record</a>
+    <a href="{% url 'authors-create' %}">Add new record</a>
 </body>
 </html>
