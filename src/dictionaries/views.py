@@ -1,11 +1,42 @@
+from django.shortcuts import render
 from . import models
+from . import forms
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 
+views_dicts = [
+    'Authors',
+    'Countries',
+    'Genres',
+    'Series',
+    'Publishers'
+]
+
+
 # Create your views here.
+def main_dicts(request):
+    return render(request, template_name='main_dicts.html', context={'view_dicts': views_dicts})
+
+
 class AuthorsList(ListView):
     model = models.Authors
+
+
+class CountriesList(ListView):
+    model = models.Countries
+
+
+class GenresList(ListView):
+    model = models.Genres
+    
+
+class SeriesList(ListView):
+    model = models.Series
+
+
+class PublishersList(ListView):
+    model = models.Publishers
 
 
 class AuthorsDetail(DetailView):
@@ -17,14 +48,34 @@ class AuthorsDelete(DeleteView):
     success_url = reverse_lazy('authors-list')
 
 
+class CountriesDelete(DeleteView):
+    model = models.Countries
+    success_url = reverse_lazy('countries-list')
+
+
 class AuthorsUpdate(UpdateView):
     model = models.Authors
-    fields = ['first_name', 'last_name', 'country', 'date_of_birth']
+    form_class = forms.AuthorForm
+    # fields = ['first_name', 'last_name', 'country', 'date_of_birth']
     success_url = reverse_lazy('authors-list')
 
+
+class CountriesUpdate(UpdateView):
+    model = models.Countries
+    form_class = forms.CountryForm
+    # fields = ['first_name', 'last_name', 'country', 'date_of_birth']
+    success_url = reverse_lazy('countries-list')
 
 
 class AuthorsCreate(CreateView):
     model = models.Authors
-    fields = ['first_name', 'last_name', 'country', 'date_of_birth']
+    form_class = forms.AuthorForm
+    # fields = ['first_name', 'last_name', 'country', 'date_of_birth']
     success_url = reverse_lazy('authors-list')
+
+
+class CountriesCreate(CreateView):
+    model = models.Countries
+    form_class = forms.CountryForm
+    # fields = ['first_name', 'last_name', 'country', 'date_of_birth']
+    success_url = reverse_lazy('countries-list')

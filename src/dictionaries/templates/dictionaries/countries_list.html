@@ -10,25 +10,21 @@
         <caption style="font-size: 16pt; font: bold;">Dictionary: "Authors"</caption>
         <tr>
             <th>PK</th>
-            <th>Firs name</th>
-            <th>Last name</th>
-            <th>Actions</th>
+            <th>Name</th>
         </tr>
         {% for object in object_list %}
         <tr>
             <td>{{ object.pk }}</td>
-            <td>{{ object.first_name }}</td>
-            <td>{{ object.last_name }}</td>
+            <td>{{ object.name }}</td>
             <td>
-                <a href="{% url 'authors-detail' object.pk %}">Detail</a>
-                <a href="{% url 'authors-update' object.pk %}">Update</a>
-                <a href="{% url 'authors-delete' object.pk %}">Delete</a>
+                <a href="{% url 'countries-update' object.pk %}">Update</a>
+                <a href="{% url 'countries-delete' object.pk %}">Delete</a>
             </td>
         </tr>
         {% endfor %}
     </table>
     <br>
-    <a href="{% url 'authors-create' %}">Add new record</a><br><br>
+    <a href="{% url 'countries-create' %}">Add new record</a><br><br>
     <a href="{% url 'dicts-list' %}">Dictionary select page</a>
 </body>
 </html>

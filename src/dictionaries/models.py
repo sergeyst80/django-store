@@ -3,6 +3,27 @@ import datetime
 # Create your models here.
 
 
+# def get_field_from_model(in_model):
+#     print(in_model)
+#     fields = []
+#     for field in in_model._meta.get_fields():
+#         item = field.__str__().split('.')[-1]
+#         if item != 'id':
+#             fields.append(item)
+#     print(fields)
+#     return fields
+
+
+class Cities(models.Model):
+    name = models.CharField(
+        verbose_name='City name',
+        max_length=80,
+        unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Countries(models.Model):
     name = models.CharField(
         verbose_name='Country name',

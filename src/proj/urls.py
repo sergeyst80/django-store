@@ -15,14 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from dictionaries import views
+from dictionaries import views, models
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.AuthorsList.as_view(), name='authors-list'),
+    path('', views.main_dicts, name='dicts-list'),
+    path('authors-list/', views.AuthorsList.as_view(), name='authors-list'),
+    path('countries-list/', views.CountriesList.as_view(), name='countries-list'),
     path('authors-detail/<int:pk>/', views.AuthorsDetail.as_view(), name='authors-detail'),
     path('authors-delete/<int:pk>/', views.AuthorsDelete.as_view(), name='authors-delete'),
+    path('countries-delete/<int:pk>/', views.CountriesDelete.as_view(), name='countries-delete'),
     path('authors-update/<int:pk>/', views.AuthorsUpdate.as_view(), name='authors-update'),
+    path('countries-update/<int:pk>/', views.CountriesUpdate.as_view(), name='countries-update'),
     path('authors-create/', views.AuthorsCreate.as_view(), name='authors-create'),
+    path('countries-create/', views.CountriesCreate.as_view(), name='countries-create')
 ]
