@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dictionaryies select</title>
-</head>
-<body>
+{% extends "main_templ.html" %}
+
+{% block title %}
+    {{page_title}}
+{% endblock title %}
+
+{% block main_content %}
+
     <h1>Select dictionary</h1>
     <ul>
         {% for dict in view_dicts %}
@@ -14,5 +14,5 @@
         </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+
+{% endblock main_content %}
