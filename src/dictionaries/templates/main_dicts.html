@@ -1,16 +1,16 @@
 {% extends "main_templ.html" %}
 
 {% block title %}
-    {{page_title}}
+    Dictionaries
 {% endblock title %}
 
 {% block page_header %}
-    Select dictionary
+    Dictionaries list
 {% endblock page_header %}
 
 {% block main_content %}
 
-    <ul>
+    <ul style="text-align: left;">
         {% for dict in view_dicts %}
         <li>
             <a href="{{ dict|lower }}-list/">{{ dict }}</a>

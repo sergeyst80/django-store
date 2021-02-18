@@ -14,10 +14,12 @@
 
     <form action="" method="POST">
         {% csrf_token %}
-        {{ form|crispy }}<br>
-        <button type="submit" class="btn btn-success">Save</button>
+        {{ form|crispy }}
+        <br>
+        <button type="submit" class="btn btn-success" style="width: 200px;">Save</button>
+        <br><br>
+        <button onclick="history.back()" class="btn btn-secondary" style="width: 200px;">Back</button>
     </form>
-    <br>
-    <button onclick="history.back()" class="btn btn-secondary">Back</button>
-
+   
+    
 {% endblock main_content %}
