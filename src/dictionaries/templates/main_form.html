@@ -3,18 +3,21 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    Add new record to "Authors"
+    Add/Edit data
 {% endblock title %}
+
+{% block page_header %}
+    Enter data:
+{% endblock page_header %}
 
 {% block main_content %}
 
-    <h1>Input data</h1>
     <form action="" method="POST">
         {% csrf_token %}
         {{ form|crispy }}<br>
         <button type="submit" class="btn btn-success">Save</button>
     </form>
     <br>
-    <a href="{% url 'authors-list' %}" class="btn btn-secondary">Main page</a>
+    <button onclick="history.back()" class="btn btn-secondary">Back</button>
 
 {% endblock main_content %}

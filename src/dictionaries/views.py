@@ -45,17 +45,20 @@ class AuthorsDetail(DetailView):
 
 class AuthorsDelete(DeleteView):
     model = models.Authors
+    template_name = 'confirm_delete.html'
     success_url = reverse_lazy('authors-list')
 
 
 class CountriesDelete(DeleteView):
     model = models.Countries
+    template_name = 'confirm_delete.html'
     success_url = reverse_lazy('countries-list')
 
 
 class AuthorsUpdate(UpdateView):
     model = models.Authors
     form_class = forms.AuthorForm
+    template_name = 'main_form.html'
     # fields = ['first_name', 'last_name', 'country', 'date_of_birth']
     success_url = reverse_lazy('authors-list')
 
@@ -63,6 +66,7 @@ class AuthorsUpdate(UpdateView):
 class CountriesUpdate(UpdateView):
     model = models.Countries
     form_class = forms.CountryForm
+    template_name = 'main_form.html'
     # fields = ['first_name', 'last_name', 'country', 'date_of_birth']
     success_url = reverse_lazy('countries-list')
 
@@ -70,6 +74,7 @@ class CountriesUpdate(UpdateView):
 class AuthorsCreate(CreateView):
     model = models.Authors
     form_class = forms.AuthorForm
+    template_name = 'main_form.html'
     # fields = ['first_name', 'last_name', 'country', 'date_of_birth']
     success_url = reverse_lazy('authors-list')
 
@@ -77,5 +82,6 @@ class AuthorsCreate(CreateView):
 class CountriesCreate(CreateView):
     model = models.Countries
     form_class = forms.CountryForm
+    template_name = 'main_form.html'
     # fields = ['first_name', 'last_name', 'country', 'date_of_birth']
     success_url = reverse_lazy('countries-list')

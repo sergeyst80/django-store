@@ -1,0 +1,20 @@
+{% extends "main_templ.html" %}
+
+{% block title %}
+    Delete record
+{% endblock title %}
+
+{% block page_header %}
+    Do you want delete record #{{ object.pk }} <b><i>({{ object}})</i></b>?
+{% endblock page_header %}
+
+{% block main_content %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm</button>
+    </form>
+    <br>
+    <a href="{% url 'authors-list' %}" class="btn btn-secondary">Back</a>
+
+{% endblock main_content %}

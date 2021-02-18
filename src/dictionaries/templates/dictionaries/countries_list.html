@@ -1,30 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dictionary Author</title>
-</head>
-<body>
-    <table border="1px"">
-        <caption style="font-size: 16pt; font: bold;">Dictionary: "Authors"</caption>
+{% extends "main_templ.html" %}
+
+{% block title %}
+    Dictionary "Countries"
+{% endblock title %}
+
+{% block page_header %}
+    Countries
+{% endblock page_header %}
+
+{% block main_content %}
+    <table class="table table-striped">
         <tr>
             <th>PK</th>
             <th>Name</th>
+            <th>Actions</th>
         </tr>
+        
         {% for object in object_list %}
-        <tr>
-            <td>{{ object.pk }}</td>
-            <td>{{ object.name }}</td>
-            <td>
-                <a href="{% url 'countries-update' object.pk %}">Update</a>
-                <a href="{% url 'countries-delete' object.pk %}">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>{{ object.pk }}</td>
+                <td>{{ object.name }}</td>
+                <td>
+                    <a title="Edit" href="{% url 'countries-update' object.pk %}"><i class="bi bi-pencil"></i></a>
+                    <a title="Delete" href="{% url 'countries-delete' object.pk %}"><i class="bi bi-trash"></i></a>
+                </td>
+            </tr>
         {% endfor %}
     </table>
     <br>
-    <a href="{% url 'countries-create' %}">Add new record</a><br><br>
-    <a href="{% url 'dicts-list' %}">Dictionary select page</a>
-</body>
-</html>
+    <a href="{% url 'countries-create' %}" class="btn btn-primary">New record</a><br><br>
+    <a href="{% url 'dicts-list' %}" class="btn btn-secondary">Back</a>
+
+{% endblock main_content %}

@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dictionary record detail</title>
-</head>
-<body>
-    <h1>Detail of record #{{ object.pk }}</h1>
+{% extends "main_templ.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Detail of record
+{% endblock title %}
+
+{% block page_header %}
+    Detail of record #{{ object.pk }}
+{% endblock page_header %}
+
+{% block main_content %}
+
     First name: {{ object.first_name }}<br>
     Last name: {{ object.last_name }}<br>
     Country: {{ object.country }}<br>
     Date of birth: {{ object.date_of_birth }}<br><br>
-    <a href="{% url 'authors-list' %}">Main page</a>
-</body>
-</html>
+    <a href="{% url 'authors-list' %}"  class="btn btn-secondary">Back</a>
+
+{% endblock main_content %}
