@@ -1,0 +1,24 @@
+{% extends "dictionaries/main_templ.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Добавление/Редактирвание данных
+{% endblock title %}
+
+{% block page_header %}
+    Введите данные:
+{% endblock page_header %}
+
+{% block main_content %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <br>
+        <button type="submit" class="btn btn-success" style="width: 200px;">Сохранить</button>
+    </form>
+    <br>
+    <button onclick="history.back()" class="btn btn-secondary" style="width: 200px;">Назад</button>
+    
+{% endblock main_content %}

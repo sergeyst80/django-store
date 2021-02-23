@@ -1,0 +1,39 @@
+{% extends "dictionaries/main_templ.html" %}
+
+{% block title %}
+    {{ block.super }}
+{% endblock title %}
+
+{% block page_header %}
+    {{ block.super }}
+{% endblock page_header %}
+
+{% block main_content %}
+
+    <table class="table table-striped" style="width: 60%; margin-left: 20%;">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.pk }}</td>
+                <td>{{ object.name }}</td>
+                <td>
+                    {% block dict_actions %}
+                        <a title="Edit" href="{% url 'authors-update' object.pk %}"><i class="bi bi-pencil-square"></i></a>
+                        <a title="Delete" href="{% url 'authors-delete' object.pk %}"><i class="bi bi-trash"></i></a>
+                    {% endblock dict_actions %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    {% block dict_create %}
+        <a href="{% url 'authors-create' %}" class="btn btn-primary" style="width: 200px;">New record</a><br><br>
+    {% endblock dict_create %}
+    {% comment %} <a href="{% url 'dicts-list' %}" class="btn btn-secondary" style="width: 200px;">Back</a> {% endcomment %}
+
+{% endblock main_content %}

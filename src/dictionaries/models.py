@@ -5,7 +5,7 @@ import datetime
 
 class Authors(models.Model):
     name = models.CharField(
-        verbose_name='Author\'s first name',
+        verbose_name='Имя автора',
         max_length=80,
         unique=True
     )
@@ -16,7 +16,7 @@ class Authors(models.Model):
 
 class Series(models.Model):
     name = models.CharField(
-        verbose_name='Book series name',
+        verbose_name='Серия книг',
         max_length=80,
         unique=True
     )
@@ -27,7 +27,7 @@ class Series(models.Model):
 
 class Genres(models.Model):
     name = models.CharField(
-        verbose_name='Book genre name',
+        verbose_name='Жанр книги',
         max_length=80,
         unique=True
     )
@@ -38,7 +38,7 @@ class Genres(models.Model):
 
 class Publishers(models.Model):
     name = models.CharField(
-        verbose_name='Publisher name',
+        verbose_name='Название издателя',
         max_length=80,
         unique=True
     )

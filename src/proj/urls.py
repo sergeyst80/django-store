@@ -19,9 +19,24 @@ from dictionaries import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('dictionaries/', views.main_dicts, name='dicts-list'),
+    
     path('dictionaries/authors-list/', views.AuthorsList.as_view(), name='authors-list'),
+    path('dictionaries/genres-list/', views.GenresList.as_view(), name='genres-list'),
+    path('dictionaries/series-list/', views.SeriesList.as_view(), name='series-list'),
+    path('dictionaries/publishers-list/', views.PublishersList.as_view(), name='publishers-list'),
+
     path('dictionaries/authors-delete/<int:pk>/', views.AuthorsDelete.as_view(), name='authors-delete'),
+    path('dictionaries/genres-delete/<int:pk>/', views.GenresDelete.as_view(), name='genres-delete'),
+    path('dictionaries/series-delete/<int:pk>/', views.SeriesDelete.as_view(), name='series-delete'),
+    path('dictionaries/publishers-delete/<int:pk>/', views.PublishersDelete.as_view(), name='publishers-delete'),
+    
     path('dictionaries/authors-update/<int:pk>/', views.AuthorsUpdate.as_view(), name='authors-update'),
-    path('dictionaries/authors-create/', views.AuthorsCreate.as_view(), name='authors-create')
+    path('dictionaries/genres-update/<int:pk>/', views.GenresUpdate.as_view(), name='genres-update'),
+    path('dictionaries/series-update/<int:pk>/', views.SeriesUpdate.as_view(), name='series-update'),
+    path('dictionaries/publishes-update/<int:pk>/', views.PublishersUpdate.as_view(), name='publishers-update'),
+    
+    path('dictionaries/authors-create/', views.AuthorsCreate.as_view(), name='authors-create'),
+    path('dictionaries/genres-create/', views.GenresCreate.as_view(), name='genres-create'),
+    path('dictionaries/series-create/', views.SeriesCreate.as_view(), name='series-create'),
+    path('dictionaries/publishers-create/', views.PublishersCreate.as_view(), name='publishers-create')
 ]

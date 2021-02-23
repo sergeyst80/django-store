@@ -1,39 +1,18 @@
-{% extends "main_templ.html" %}
+{% extends "dictionaries/dict_list_template.html" %}
 
 {% block title %}
-    Dictionary "Authors"
+    Словарь "Авторы"
 {% endblock title %}
 
 {% block page_header %}
-    Authors
+    Авторы <br>
 {% endblock page_header %}
 
-{% block main_content %}
+{% block dict_actions %}
+    <a title="Edit" href="{% url 'authors-update' object.pk %}"><i class="bi bi-pencil-square"></i></a>
+    <a title="Delete" href="{% url 'authors-delete' object.pk %}"><i class="bi bi-trash"></i></a>
+{% endblock dict_actions %}
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>PK</th>
-                <th>Firs name</th>
-                <th>Last name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        {% for object in object_list %}
-        <tr>
-            <td>{{ object.pk }}</td>
-            <td>{{ object.first_name }}</td> 
-            <td>{{ object.last_name }}</td>
-            <td>
-                <a title="View detail" href="{% url 'authors-detail' object.pk %}"><i class="bi bi-eye"></i></a>
-                <a title="Edit" href="{% url 'authors-update' object.pk %}"><i class="bi bi-pencil-square"></i></a>
-                <a title="Delete" href="{% url 'authors-delete' object.pk %}"><i class="bi bi-trash"></i></a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <a href="{% url 'authors-create' %}" class="btn btn-primary" style="width: 200px;">New record</a><br><br>
-    <a href="{% url 'dicts-list' %}" class="btn btn-secondary" style="width: 200px;">Back</a>
-
-{% endblock main_content %}
+{% block dict_create %}
+    <a href="{% url 'authors-create' %}" class="btn btn-primary" style="width: 200px;">Добавить</a><br><br>
+{% endblock dict_create %}

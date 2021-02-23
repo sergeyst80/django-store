@@ -15,7 +15,7 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'dicts-list' %}"
+        <a class="nav-link" href="{% url 'authors-list' %}"
           >Главная <span class="sr-only">(current)</span></a
         >
       </li>
@@ -30,7 +30,7 @@
       <li class="nav-item dropdown">
         <a
           class="nav-link dropdown-toggle"
-          href="#"
+          href=""
           id="dropdown01"
           data-toggle="dropdown"
           aria-haspopup="true"
@@ -38,10 +38,10 @@
           >Словари</a
         >
         <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="authors-list/">Авторы</a>
-          <a class="dropdown-item" href="genres-list/">Жанры</a>
-          <a class="dropdown-item" href="series-list/">Серии</a>
-          <a class="dropdown-item" href="publishers-list/">Издательства</a>
+          <a class="dropdown-item" href="{% url 'authors-list' %}">Авторы</a>
+          <a class="dropdown-item" href="{% url 'genres-list' %}">Жанры</a>
+          <a class="dropdown-item" href="{% url 'series-list' %}">Серии</a>
+          <a class="dropdown-item" href="{% url 'publishers-list' %}">Издательства</a>
         </div>
       </li>
     </ul>

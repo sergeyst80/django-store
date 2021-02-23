@@ -1,34 +1,18 @@
-{% extends "main_templ.html" %}
+{% extends "dictionaries/dict_list_template.html" %}
 
 {% block title %}
-    Dictionary "Countries"
+    Словарь "Жанры"
 {% endblock title %}
 
 {% block page_header %}
-    Countries
+    Жанры
 {% endblock page_header %}
 
-{% block main_content %}
-    <table class="table table-striped">
-        <tr>
-            <th>PK</th>
-            <th>Name</th>
-            <th>Actions</th>
-        </tr>
-        
-        {% for object in object_list %}
-            <tr>
-                <td>{{ object.pk }}</td>
-                <td>{{ object.name }}</td>
-                <td>
-                    <a title="Edit" href="{% url 'countries-update' object.pk %}"><i class="bi bi-pencil-square"></i></a>
-                    <a title="Delete" href="{% url 'countries-delete' object.pk %}"><i class="bi bi-trash"></i></a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <a href="{% url 'countries-create' %}" class="btn btn-primary" style="width: 200px;">New record</a><br><br>
-    <a href="{% url 'dicts-list' %}" class="btn btn-secondary" style="width: 200px;">Back</a>
+{% block dict_actions %}
+    <a title="Edit" href="{% url 'genres-update' object.pk %}"><i class="bi bi-pencil-square"></i></a>
+    <a title="Delete" href="{% url 'genres-delete' object.pk %}"><i class="bi bi-trash"></i></a>
+{% endblock dict_actions %}
 
-{% endblock main_content %}
+{% block dict_create %}
+    <a href="{% url 'genres-create' %}" class="btn btn-primary" style="width: 200px;">Добавить</a><br><br>
+{% endblock dict_create %}

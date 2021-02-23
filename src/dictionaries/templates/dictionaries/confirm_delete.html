@@ -1,0 +1,20 @@
+{% extends "dictionaries/main_templ.html" %}
+
+{% block title %}
+    Удаление записи
+{% endblock title %}
+
+{% block page_header %}
+    Вы хотите удалить запись №{{ object.pk }} <b><i>({{ object}})</i></b>?
+{% endblock page_header %}
+
+{% block main_content %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" style="width: 200px;">Удалить</button>
+    </form>
+    <br>
+    <a onclick="history.back()" class="btn btn-secondary" style="width: 200px;">Назад</a>
+
+{% endblock main_content %}
