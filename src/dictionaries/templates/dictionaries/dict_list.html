@@ -1,17 +1,17 @@
 {% extends "main_templ.html" %}
 
 {% block title %}
-    Dictionary "Countries"
+    Dictionary "{{ context_object_name }}"
 {% endblock title %}
 
 {% block page_header %}
-    Countries
+    {{ context_object_name }}
 {% endblock page_header %}
 
 {% block main_content %}
     <table class="table table-striped">
         <tr>
-            <th>PK</th>
+            <th>Id</th>
             <th>Name</th>
             <th>Actions</th>
         </tr>
@@ -21,14 +21,14 @@
                 <td>{{ object.pk }}</td>
                 <td>{{ object.name }}</td>
                 <td>
-                    <a title="Edit" href="{% url 'countries-update' object.pk %}"><i class="bi bi-pencil"></i></a>
-                    <a title="Delete" href="{% url 'countries-delete' object.pk %}"><i class="bi bi-trash"></i></a>
+                    <a title="Edit" href="{% url '{{ context_object_name|lower }}-update' object.pk %}"><i class="bi bi-pencil-square"></i></a>
+                    <a title="Delete" href="{% url '{{ context_object_name|lower }}-delete' object.pk %}"><i class="bi bi-trash"></i></a>
                 </td>
             </tr>
         {% endfor %}
     </table>
     <br>
-    <a href="{% url 'countries-create' %}" class="btn btn-primary" style="width: 200px;">New record</a><br><br>
+    <a href="{% url '{{ context_object_name|lower }}-create' %}" class="btn btn-primary" style="width: 200px;">New record</a><br><br>
     <a href="{% url 'dicts-list' %}" class="btn btn-secondary" style="width: 200px;">Back</a>
 
 {% endblock main_content %}
