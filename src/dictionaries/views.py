@@ -2,105 +2,109 @@ from django.shortcuts import render
 from . import models
 from . import forms
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views import generic
 
 
 # Create your views here.
 # Dictionaries ListViews
-class AuthorsList(ListView):
+class AuthorsList(generic.ListView):
     model = models.Authors
+    template_name = 'dictionaries/list_authors.html'
     
 
-class GenresList(ListView):
+class GenresList(generic.ListView):
     model = models.Genres
+    template_name = 'dictionaries/list_genres.html'
     
 
-class SeriesList(ListView):
+class SeriesList(generic.ListView):
     model = models.Series
+    template_name = 'dictionaries/list_series.html'
 
 
-class PublishersList(ListView):
+class PublishersList(generic.ListView):
     model = models.Publishers
+    template_name = 'dictionaries/list_publishers.html'
 
 
-# Dictionaries DeleteViews
-class AuthorsDelete(DeleteView):
+# Dictionaries generic.DeleteViews
+class AuthorsDelete(generic.DeleteView):
     model = models.Authors
-    template_name = 'dictionaries/confirm_delete.html'
+    template_name = 'dictionaries/form_confirm_delete.html'
     success_url = reverse_lazy('authors-list')
 
 
-class GenresDelete(DeleteView):
+class GenresDelete(generic.DeleteView):
     model = models.Genres
-    template_name = 'dictionaries/confirm_delete.html'
+    template_name = 'dictionaries/form_confirm_delete.html'
     success_url = reverse_lazy('genres-list')
 
 
-class SeriesDelete(DeleteView):
+class SeriesDelete(generic.DeleteView):
     model = models.Series
-    template_name = 'dictionaries/confirm_delete.html'
+    template_name = 'dictionaries/form_confirm_delete.html'
     success_url = reverse_lazy('series-list')
 
 
-class PublishersDelete(DeleteView):
+class PublishersDelete(generic.DeleteView):
     model = models.Publishers
-    template_name = 'dictionaries/confirm_delete.html'
+    template_name = 'dictionaries/form_confirm_delete.html'
     success_url = reverse_lazy('publishers-list')
 
 
 # Dictionaries UpdateViews
-class AuthorsUpdate(UpdateView):
+class AuthorsUpdate(generic.UpdateView):
     model = models.Authors
     form_class = forms.AuthorForm
-    template_name = 'dictionaries/main_form.html'
+    template_name = 'dictionaries/form_create_update.html'
     success_url = reverse_lazy('authors-list')
 
 
-class GenresUpdate(UpdateView):
+class GenresUpdate(generic.UpdateView):
     model = models.Genres
     form_class = forms.GenreForm
-    template_name = 'dictionaries/main_form.html'
+    template_name = 'dictionaries/form_create_update.html'
     success_url = reverse_lazy('genres-list')
 
 
-class SeriesUpdate(UpdateView):
+class SeriesUpdate(generic.UpdateView):
     model = models.Series
     form_class = forms.SeriesForm
-    template_name = 'dictionaries/main_form.html'
+    template_name = 'dictionaries/form_create_update.html'
     success_url = reverse_lazy('series-list')
 
 
-class PublishersUpdate(UpdateView):
+class PublishersUpdate(generic.UpdateView):
     model = models.Publishers
     form_class = forms.PublisherForm
-    template_name = 'dictionaries/main_form.html'
+    template_name = 'dictionaries/form_create_update.html'
     success_url = reverse_lazy('publishers-list')
 
 
 # Dictionaries CreateViews
-class AuthorsCreate(CreateView):
+class AuthorsCreate(generic.CreateView):
     model = models.Authors
     form_class = forms.AuthorForm
-    template_name = 'dictionaries/main_form.html'
+    template_name = 'dictionaries/form_create_update.html'
     success_url = reverse_lazy('authors-list')
 
 
-class GenresCreate(CreateView):
+class GenresCreate(generic.CreateView):
     model = models.Genres
     form_class = forms.GenreForm
-    template_name = 'dictionaries/main_form.html'
+    template_name = 'dictionaries/form_create_update.html'
     success_url = reverse_lazy('genres-list')
 
 
-class SeriesCreate(CreateView):
+class SeriesCreate(generic.CreateView):
     model = models.Series
     form_class = forms.SeriesForm
-    template_name = 'dictionaries/main_form.html'
+    template_name = 'dictionaries/form_create_update.html'
     success_url = reverse_lazy('series-list')
 
 
-class PublishersCreate(CreateView):
+class PublishersCreate(generic.CreateView):
     model = models.Publishers
     form_class = forms.PublisherForm
-    template_name = 'dictionaries/main_form.html'
+    template_name = 'dictionaries/form_create_update.html'
     success_url = reverse_lazy('publishers-list')
