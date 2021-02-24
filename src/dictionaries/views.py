@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from . import models
-from . import forms
 from django.urls import reverse_lazy
 from django.views import generic
+
+from dictionaries import models, forms
 
 
 # Create your views here.
@@ -25,6 +25,16 @@ class SeriesList(generic.ListView):
 class PublishersList(generic.ListView):
     model = models.Publishers
     template_name = 'dictionaries/list_publishers.html'
+
+
+class AgeCategoriesList(generic.ListView):
+    model = models.AgeCategories
+    template_name = 'dictionaries/list_age_categories.html'
+
+
+class BookFormatsList(generic.ListView):
+    model = models.BookFormats
+    template_name = 'dictionaries/list_book_formats.html'
 
 
 # Dictionaries generic.DeleteViews
@@ -50,6 +60,18 @@ class PublishersDelete(generic.DeleteView):
     model = models.Publishers
     template_name = 'dictionaries/form_confirm_delete.html'
     success_url = reverse_lazy('publishers-list')
+
+
+class AgeCategoriesDelete(generic.DeleteView):
+    model = models.AgeCategories
+    template_name = 'dictionaries/form_confirm_delete.html'
+    success_url = reverse_lazy('age_categories-list')
+
+
+class BookFormatsDelete(generic.DeleteView):
+    model = models.BookFormats
+    template_name = 'dictionaries/form_confirm_delete.html'
+    success_url = reverse_lazy('boo_formats-list')
 
 
 # Dictionaries UpdateViews
@@ -81,6 +103,20 @@ class PublishersUpdate(generic.UpdateView):
     success_url = reverse_lazy('publishers-list')
 
 
+class AgeCategoriesUpdate(generic.UpdateView):
+    model = models.AgeCategories
+    form_class = forms.AgeCategoriesForm
+    template_name = 'dictionaries/form_create_update.html'
+    success_url = reverse_lazy('age_categories-list')
+
+
+class BookFormatsUpdate(generic.UpdateView):
+    model = models.BookFormats
+    form_class = forms.BookFormatsForm
+    template_name = 'dictionaries/form_create_update.html'
+    success_url = reverse_lazy('book_formats-list')
+
+
 # Dictionaries CreateViews
 class AuthorsCreate(generic.CreateView):
     model = models.Authors
@@ -108,3 +144,17 @@ class PublishersCreate(generic.CreateView):
     form_class = forms.PublisherForm
     template_name = 'dictionaries/form_create_update.html'
     success_url = reverse_lazy('publishers-list')
+
+
+class AgeCategoriesCreate(generic.CreateView):
+    model = models.AgeCategories
+    form_class = forms.AgeCategoriesForm
+    template_name = 'dictionaries/form_create_update.html'
+    success_url = reverse_lazy('age_categories-list')
+
+
+class BookFormatsCreate(generic.CreateView):
+    model = models.BookFormats
+    form_class = forms.BookFormatsForm
+    template_name = 'dictionaries/form_create_update.html'
+    success_url = reverse_lazy('book_formats-list')

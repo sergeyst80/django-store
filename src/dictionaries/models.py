@@ -45,3 +45,24 @@ class Publishers(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class AgeCategories(models.Model):
+    name = models.CharField(
+        verbose_name='Возрастная категория',
+        max_length=80,
+        default='0+'
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class BookFormats(models.Model):
+    name = models.CharField(
+        verbose_name='Формат книги',
+        max_length=80
+    )
+
+    def __str__(self):
+        return self.name

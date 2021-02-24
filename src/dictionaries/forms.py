@@ -1,5 +1,5 @@
 from django import forms
-from . import models
+from dictionaries import models
 
 
 class AuthorForm(forms.ModelForm):
@@ -23,4 +23,16 @@ class SeriesForm(forms.ModelForm):
 class PublisherForm(forms.ModelForm):
     class Meta:
         model = models.Publishers
+        fields = ['name']
+
+
+class AgeCategoriesForm(forms.ModelForm):
+    class Meta:
+        model = models.AgeCategories
+        fields = ['name']
+
+
+class BookFormatsForm(forms.ModelForm):
+    class Meta:
+        model = models.BookFormats
         fields = ['name']

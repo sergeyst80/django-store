@@ -1,0 +1,18 @@
+{% extends "dictionaries/list_template.html" %}
+
+{% block title %}
+    Словарь "Форматы книг"
+{% endblock title %}
+
+{% block page_header %}
+    Форматы книг
+{% endblock page_header %}
+
+{% block dict_actions %}
+    <a title="Edit" href="{% url 'book_formats-update' object.pk %}"><i class="bi bi-pencil-square"></i></a>
+    <a title="Delete" href="{% url 'book_formats-delete' object.pk %}"><i class="bi bi-trash"></i></a>
+{% endblock dict_actions %}
+
+{% block dict_create %}
+    <a href="{% url 'book_formats-create' %}" class="btn btn-primary" style="width: 200px;">Добавить</a><br><br>
+{% endblock dict_create %}
