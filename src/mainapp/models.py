@@ -102,3 +102,9 @@ class BookCard(models.Model):
         verbose_name='Дата изменения карточки',
         auto_now=True
     )
+
+    def get_authors(self):
+        return "\n".join([p.name for p in self.authors.all()])
+    
+    def get_genres(self):
+        return "\n".join([p.name for p in self.genres.all()])
