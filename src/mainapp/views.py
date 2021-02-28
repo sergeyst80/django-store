@@ -12,9 +12,7 @@ class HomePage(generic.TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        books = mainapp_models.BookCard.objects.all()
-        cards = []
-        for book in books :
-            cards.append([book, book.get_authors(), book.get_genres()])
-        context['objects'] = cards
+        last_books = mainapp_models.BookCard.objects.all().order_by('-id')[:9]
+        
+        context['objects'] = last_books
         return context
