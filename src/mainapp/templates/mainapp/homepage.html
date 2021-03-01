@@ -17,7 +17,7 @@
       </ol>
     <div class="carousel-inner">
       <div class="carousel-item active" data-interval="5000">
-        <a href="{% url 'homepage' %}"><img src="media/img1.jpg" class="img-thumbnail" alt="..."></a>
+        <a href="{% url 'homepage' %}"><img src="{{ news.0.picture }}}" class="img-thumbnail" alt="..."></a>
         <div ></div>
         {% comment %} <div class="carousel-caption d-none text-white bg-secondary d-md-block" style="opacity: 70%;">
             <h5>First slide label</h5>

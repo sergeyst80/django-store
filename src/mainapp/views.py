@@ -10,10 +10,12 @@ class HomePage(generic.TemplateView):
     model = mainapp_models.BookCard
     template_name = "mainapp/homepage.html"
     
-    def get_context_data(self, **kwargs):
+    def get_context_data (self, **kwargs):
         context = super().get_context_data(**kwargs)
         books = mainapp_models.BookCard.objects.all()
         cards = []
+        news = [books[2], books[1], books[0]]
+        context['news'] = news
         for book in books :
             cards.append([book, book.get_authors(), book.get_genres()])
         context['objects'] = cards
