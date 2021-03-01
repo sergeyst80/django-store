@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from dictionaries import models
+from references import models
 
 
 class DictionariesAdmin(admin.ModelAdmin):

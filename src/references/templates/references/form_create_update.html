@@ -1,4 +1,4 @@
-{% extends "template_main.html" %}
+{% extends "references/template_main.html" %}
 
 {% load crispy_forms_tags %}
 
@@ -11,6 +11,10 @@
 {% endblock page_header %}
 
 {% block main_content %}
+
+{% block page_nav_bar %}
+{% include 'references/nav_bar.html' %}
+{% endblock page_nav_bar %}
 
     <form action="" method="POST">
         {% csrf_token %}

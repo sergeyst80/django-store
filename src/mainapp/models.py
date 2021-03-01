@@ -24,18 +24,18 @@ class BookCard(models.Model):
     )
     
     authors = ManyToManyField(
-        'dictionaries.Authors',
+        'references.Authors',
         verbose_name='Авторы книги'
     )
 
     series = ForeignKey(
-        'dictionaries.Series',
+        'references.Series',
         on_delete = models.PROTECT,
         null=True
     )
 
     genres = ManyToManyField(
-        'dictionaries.Genres',
+        'references.Genres',
         verbose_name='Жанры'
     )
 
@@ -50,7 +50,7 @@ class BookCard(models.Model):
     )
 
     book_format = ForeignKey(
-        'dictionaries.BookFormats',
+        'references.BookFormats',
         on_delete = models.PROTECT,
         null=True
     )
@@ -67,13 +67,13 @@ class BookCard(models.Model):
     )
 
     age_category = ForeignKey(
-        'dictionaries.AgeCategories',
+        'references.AgeCategories',
         on_delete = models.PROTECT,
         null=True
     )
 
     publisher = ForeignKey(
-        'dictionaries.Publishers',
+        'references.Publishers',
         on_delete = models.PROTECT,
         null=True
     )

@@ -7,6 +7,7 @@ class Authors(models.Model):
     name = models.CharField(
         verbose_name='Имя автора',
         max_length=80,
+        null=True,
         unique=True
     )
 
@@ -18,6 +19,7 @@ class Series(models.Model):
     name = models.CharField(
         verbose_name='Серия книг',
         max_length=80,
+        null=True,
         unique=True
     )
 
@@ -29,6 +31,7 @@ class Genres(models.Model):
     name = models.CharField(
         verbose_name='Жанр книги',
         max_length=80,
+        null=True,
         unique=True
     )
 
@@ -40,6 +43,7 @@ class Publishers(models.Model):
     name = models.CharField(
         verbose_name='Название издателя',
         max_length=80,
+        null=True,
         unique=True
     )
 
@@ -51,7 +55,8 @@ class AgeCategories(models.Model):
     name = models.CharField(
         verbose_name='Возрастная категория',
         max_length=80,
-        default='0+'
+        null=True,
+        unique=True
     )
 
     def __str__(self):
@@ -61,7 +66,9 @@ class AgeCategories(models.Model):
 class BookFormats(models.Model):
     name = models.CharField(
         verbose_name='Формат книги',
-        max_length=80
+        max_length=80,
+        null=True,
+        unique=True
     )
 
     def __str__(self):

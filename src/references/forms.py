@@ -1,5 +1,5 @@
 from django import forms
-from dictionaries import models
+from references import models
 
 
 class AuthorForm(forms.ModelForm):

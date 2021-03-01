@@ -1,70 +1,32 @@
-{% extends "template_main.html" %}
+{% extends "mainapp/template_main.html" %}
 
 {% block title %}
-    {{ block.super }}
+    My Book Store
 {% endblock title %}
 
 {% block page_header %}
-    {{ block.super }}
+    Последнее поступление товара
 {% endblock page_header %}
 
 {% block main_content %}
 
-<H1><u>Последнее поступление товара:</u></H1>
-<div class="row row-cols-1 row-cols-md-3">
-  {% for object in objects %}
-  <div class="col mb-4">
-    <div class="card mb-3 h-100" style="max-width: 540px;">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-          <img src="media/{{ object.picture }}" class="img-thumbnail" alt="..." >
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <p class="card-text"><b>{{object.name}}</b></p>
-            <p class="card-text">{{ object.get_authors }}</p>
-            <p class="card-text"><small class="text-muted">{{ object.get_genres }}</small></p>
-          </div>
-        </div>
+{% block page_nav_bar %}
+{% include 'mainapp/nav_bar.html' %}
+{% endblock page_nav_bar %}
 
-      </div>
-    <a href="#" class="btn btn-primary">В корзину</a>
+  <div class="container px-5">
+    <div class="row row-cols-1 row-cols-md-6 gx-5">
+      {% for object in objects %}
+        <div class="col">
+            <div class="card h-100 border-light">
+              <img src="media/{{ object.picture }}" class="img-fluid">
+              <p><b> {{ object.name }} </b></p>
+              <p> {{ object.get_authors }} </p>
+              <a href="#" class="btn btn-primary btn-sm text-bottom">В корзину</a>
+            </div>
+        </div>
+      {% endfor %}
     </div>
-    
   </div>
-  
-  
-  
-  
-    {% comment %} <div class="card h-100">
-    <img src="media/{{ object.picture }}" class="card-img-top" alt="...">
-    <div class="card-body">
-      <p class="card-text"><b>{{object.name}}</b></p>
-        <p class="card-text">{{ object.get_authors }}</p>
-        <p class="card-text"><small class="text-muted">{{ object.get_genres }}</small></p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div> {% endcomment %}
-{% comment %} 
-
-
-
-    <div class="card h-100">
-      <img src="media/{{ object.picture }}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p class="card-text"><b>{{object.name}}</b></p>
-        <p class="card-text">{{ object.get_authors }}</p>
-        <p class="card-text"><small class="text-muted">{{ object.get_genres }}</small></p>
-      </div>
-    </div>
-    
-  </div> {% endcomment %}
-  {% endfor %}
-</div>
-
-
-
-
-
 
 {% endblock main_content %}
