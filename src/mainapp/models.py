@@ -108,3 +108,6 @@ class BookCard(models.Model):
     
     def get_genres(self):
         return "\n".join([p.name for p in self.genres.all()])
+
+    def __str__(self):
+        return f'{self.pk}, {self.name}'
