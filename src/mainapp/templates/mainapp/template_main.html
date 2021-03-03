@@ -52,15 +52,15 @@
 
     <main role="main" class="container">
       <div class="starter-template">
-        <div
+        {% comment %} <div
           class="alert alert-primary"
           role="alert"
           style="text-align: center"
         >
-          <h3>{% block page_header %}{% endblock page_header %}</h3>
-        </div>
-
-        <hr />
+          <h3> {% endcomment %}
+          {% block page_header %}{% endblock page_header %}
+          {% comment %} </h3>
+        </div> {% endcomment %}
 
         {% block main_content %}{% endblock main_content %}
       </div>
