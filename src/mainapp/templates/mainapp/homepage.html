@@ -41,6 +41,11 @@
           <div class="row g-0">
             <div class="col-md-4">
               <img src="{% if not object.picture %}{% static 'mainapp/img/no_book_photo.png'%}{% else %}media/{{ object.picture }}{% endif %}"" class="img-fluid">
+              <div class="container">
+                <div class="img-stamp" style="position: absolute; top: 0px; left: 0px; background-color: transparent;">
+                  <img src="{% static 'mainapp/img/new.png'%}" class="img-fluid" width="96">
+                </div>
+              </div>
             </div>
             <div class="col-md-8">
               <div class="card-body">
