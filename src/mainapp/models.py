@@ -12,85 +12,101 @@ class BookCard(models.Model):
     picture = models.ImageField(
         verbose_name='Фото обложки',
         upload_to='uploads/',
+        null=True,
+        blank=True
     )
-    
-    # upload = models.FileField()
     
     cost = models.DecimalField(
         verbose_name='Цена (BYN)',
         max_digits=10,
         decimal_places=2,
+        null=True,
+        blank=True,
         default=0.0
     )
     
     authors = ManyToManyField(
         'references.Authors',
-        verbose_name='Авторы книги'
+        verbose_name='Авторы книги',
+        blank=True
     )
 
     series = ForeignKey(
         'references.Series',
         on_delete = models.PROTECT,
+        blank=True,
         null=True
     )
 
     genres = ManyToManyField(
         'references.Genres',
-        verbose_name='Жанры'
+        verbose_name='Жанры',
+        blank=True
     )
 
     year = models.SmallIntegerField(
         verbose_name='Год издания',
+        null=True,
         blank=True
     )
 
     num_pages = models.SmallIntegerField(
         verbose_name='Количество страниц',
+        null=True,
         blank=True
     )
 
     book_format = ForeignKey(
         'references.BookFormats',
         on_delete = models.PROTECT,
+        blank=True,
         null=True
     )
 
     isbn = models.CharField(
         verbose_name='ISBN',
         max_length=13,
-        blank=True
+        blank=True,
+        null=True
     )
 
     weight = models.SmallIntegerField(
         verbose_name='Вес (гр)',
+        null=True,
         blank=True
     )
 
     age_category = ForeignKey(
         'references.AgeCategories',
         on_delete = models.PROTECT,
+        blank=True,
         null=True
     )
 
     publisher = ForeignKey(
         'references.Publishers',
         on_delete = models.PROTECT,
+        blank=True,
         null=True
     )
 
     qty = models.SmallIntegerField(
         verbose_name='Наличие (шт)',
+        null=True,
+        blank=True,
         default=0
     )
 
     is_active = models.BooleanField(
         verbose_name='Доступен к заказу',
-        default=False
+        default=True
     )
 
     rating = models.FloatField(
         verbose_name='Рейтинг',
-        default=0.0   
+        default=0.0,
+        null=True,
+        blank=True   
     )
 
     create_date = models.DateTimeField(

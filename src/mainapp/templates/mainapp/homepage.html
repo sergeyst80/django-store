@@ -40,7 +40,7 @@
         <div class="card mb-3 border-light text-dark container-fluid" style="max-width: 480px; text-align: center;">
           <div class="row g-0">
             <div class="col-md-4">
-              <img src="media/{{ object.picture }}" class="img-fluid">
+              <img src="{% if not object.picture %}{% static 'mainapp/img/no_book_photo.png'%}{% else %}media/{{ object.picture }}{% endif %}"" class="img-fluid">
             </div>
             <div class="col-md-8">
               <div class="card-body">
@@ -63,23 +63,5 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-
-
-
-
-  <!-- <div class="container px-5">
-    <div class="row row-cols-1 row-cols-md-5 gx-5">
-      {% for object in objects %}
-        <div class="col">
-            <div class="card h-100 border-light">
-              <img src="media/{{ object.picture }}" class="img-fluid rounded mx-auto d-block" style="max-height: 15rem;">
-              <p><b> {{ object.name }} </b></p>
-              <p> {{ object.get_authors }} </p>
-              <a href="#" class="btn btn-primary btn-sm text-bottom">В корзину</a>
-            </div>
-        </div>
-      {% endfor %}
-    </div>
-  </div> -->
 
 {% endblock main_content %}
