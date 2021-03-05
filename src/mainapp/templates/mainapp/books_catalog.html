@@ -36,6 +36,7 @@
 <div class="container">
 {% for object in object_list %}
   <div class="row">
+    <h5 class="alert-primary"><b>{{ object.name }}</b></h5>
     <div class="col col-md-auto">
         <img src=
           {% if not object.picture %}
@@ -47,32 +48,142 @@
 
     </div>
     <div class="col">
-      <h6><b>Название: {{ object.name }}</b></h6>
+      <table>
+        
+        {% comment %} <tr>
+          <td>
+            <b>Название:</b>
+          </td>
+          <td>
+            {{ object.name }}
+          </td>
+        </tr> {% endcomment %}
+
+        <tr>
+          <td>
+            <b>Авторы:</b>
+          </td>
+          <td>
+            {% for author in object.authors.all %}
+              {{ author.name }}
+              {% if author != object.authors.last %}, {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Жанр:</b>
+          </td>
+          <td>
+            {% for genre in object.genres.all %}
+              {{ genre.name }}
+              {% if genre != object.genres.last %}, {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Серия:</b>
+          </td>
+          <td>
+             {{ object.series }}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Издательство:</b>
+          </td>
+          <td>
+             {{ object.publisher }}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Год издания:</b>
+          </td>
+          <td>
+             {{ object.year }}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Количество страниц:</b>
+          </td>
+          <td>
+             {{ object.num_pages }}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>Формат:</b>
+          </td>
+          <td>
+             {{ object.book_format }}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <b>ISBN:</b>
+          </td>
+          <td>
+             {{ object.isbn }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>Вес:</b>
+          </td>
+          <td>
+             {{ object.weight }}  гр.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>Возрастная категория:</b>
+          </td>
+          <td>
+             {{ object.age_category }}
+          </td>
+        </tr>
+      </table>
+
+      {% comment %} <h6><b>Название: {{ object.name }}</b></h6>
         <small>Авторы: 
           {% for author in object.authors.all %}
             {{ author.name }}
             {% if author != object.authors.last %}, {% endif %}
           {% endfor %}
         
-        <br>Серия: {{ object.series }}
         <br>Жанр:
           {% for genre in object.genres.all %}
             {{ genre.name }}
             {% if genre != object.genres.last %}, {% endif %}
           {% endfor %}
+        <br>Серия: {{ object.series }}
+        <br>Издательство: {{ object.publisher }}
         <br>Год издания: {{ object.year }}
         <br>Количество страниц: {{ object.num_pages }}
         <br>Формат: {{ object.book_format }}
         <br>ISBN: {{ object.isbn }}
         <br>Вес: {{ object.weight }} гр.
         <br>Возрастная категория: {{ object.age_category }}
-        <br>Издательство: {{ object.publisher }}
-        <br>Наличие: {{ object.qty }} шт.</small>
+        </small> {% endcomment %}
     </div>
     <div class="col col-md-auto">
       <h5>{{ object.cost }} BYN</h5>
+      Наличие: {{ object.qty }} шт.
+      <br><br>
+      <a href="#" class="btn btn-success btn-sm text-bottom {% if not object.is_active %}disabled{% endif %}"><i class="bi bi-cart4"></i> В корзину</a>
     </div>
   </div>
+  <br>
 {% endfor %}
 </div>
 
