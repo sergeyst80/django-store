@@ -1,25 +1,79 @@
 {% extends "mainapp/template_main.html" %}
 
+{% load static %}
+
 {% block title %}
     My Book Store
 {% endblock title %}
-
-{% block page_header %}
-    Последнее поступление товара
-{% endblock page_header %}
-
-{% block main_content %}
 
 {% block page_nav_bar %}
 {% include 'mainapp/nav_bar.html' %}
 {% endblock page_nav_bar %}
 
-  <div class="container px-5">
+{% block page_header %}
+
+    <table class="table">
+      <tr>
+        <td>
+          <img src="{% static 'mainapp/img/books_banner.png' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
+        </td>
+        <td>
+          <img src="{% static 'mainapp/img/news_banner01.jpg' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
+        </td>
+        <td>
+          <img src="{% static 'mainapp/img/books_banner.png' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
+        </td>
+      </tr>
+    </table>
+
+{% endblock page_header %}
+
+{% block main_content %}
+
+<br>
+<br>
+  
+<div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for object in objects %}
+      <div class="carousel-item {% if object == objects.0 %}active{% endif %}">
+        <div class="card mb-3 border-light text-dark container-fluid" style="max-width: 480px; text-align: center;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="media/{{ object.picture }}" class="img-fluid">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ object.name }}</h5>
+                <p class="card-text">{{ object.get_authors }}</p>
+                <p class="card-text"><small class="text-muted"><a href="#" class="btn btn-success btn-sm text-bottom"><i class="bi bi-cart4"></i> В корзину</a></small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+
+
+  <!-- <div class="container px-5">
+>>>>>>> ca59c2abe1c3ebd0cd44de08afa35fca21d6de62
     <div class="row row-cols-1 row-cols-md-5 gx-5">
       {% for object in objects %}
         <div class="col">
             <div class="card h-100 border-light">
-              <img src="media/{{ object.picture }}" class="img-fluid">
+              <img src="media/{{ object.picture }}" class="img-fluid rounded mx-auto d-block" style="max-height: 15rem;">
               <p><b> {{ object.name }} </b></p>
               <p> {{ object.get_authors }} </p>
               <a href="#" class="btn btn-primary btn-sm text-bottom">В корзину</a>
@@ -27,6 +81,6 @@
         </div>
       {% endfor %}
     </div>
-  </div>
+  </div> -->
 
 {% endblock main_content %}
