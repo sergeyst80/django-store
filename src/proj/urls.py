@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('', main_views.HomePage.as_view(), name='homepage'),
+    path('books-catalog', main_views.BooksCatalog.as_view(), name='books-catalog'),
 
     path('references/authors-list/', refs_views.AuthorsList.as_view(), name='authors-list'),
     path('references/genres-list/', refs_views.GenresList.as_view(), name='genres-list'),

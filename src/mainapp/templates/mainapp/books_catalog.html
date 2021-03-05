@@ -1,0 +1,130 @@
+{% extends "mainapp/template_main.html" %}
+
+{% load static %}
+
+{% block title %}
+    My Book Store
+{% endblock title %}
+
+{% block page_nav_bar %}
+{% include 'mainapp/nav_bar.html' %}
+{% endblock page_nav_bar %}
+
+{% block page_header %}
+
+    {% comment %} <table class="table">
+      <tr>
+        <td>
+          <img src="{% static 'mainapp/img/books_banner.png' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
+        </td>
+        <td>
+          <img src="{% static 'mainapp/img/news_banner01.jpg' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
+        </td>
+        <td>
+          <img src="{% static 'mainapp/img/books_banner.png' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
+        </td>
+      </tr>
+    </table> {% endcomment %}
+
+{% endblock page_header %}
+
+{% block main_content %}
+
+<br>
+<br>
+
+<div class="container">
+{% for object in object_list %}
+  <div class="row">
+    <div class="col col-md-auto">
+        <img src=
+          {% if not object.picture %}
+            "{% static 'mainapp/img/no_book_photo.png'%}"
+          {% else %}
+            "media/{{ object.picture }}"
+          {% endif %}
+        class="img-fluid" width="250px">
+
+    </div>
+    <div class="col">
+      <h6><b>Название: {{ object.name }}</b></h6>
+        <small>Авторы: 
+          {% for author in object.authors.all %}
+            {{ author.name }}
+            {% if author != object.authors.last %}, {% endif %}
+          {% endfor %}
+        
+        <br>Серия: {{ object.series }}
+        <br>Жанр:
+          {% for genre in object.genres.all %}
+            {{ genre.name }}
+            {% if genre != object.genres.last %}, {% endif %}
+          {% endfor %}
+        <br>Год издания: {{ object.year }}
+        <br>Количество страниц: {{ object.num_pages }}
+        <br>Формат: {{ object.book_format }}
+        <br>ISBN: {{ object.isbn }}
+        <br>Вес: {{ object.weight }} гр.
+        <br>Возрастная категория: {{ object.age_category }}
+        <br>Издательство: {{ object.publisher }}
+        <br>Наличие: {{ object.qty }} шт.</small>
+    </div>
+    <div class="col col-md-auto">
+      <h5>{{ object.cost }} BYN</h5>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+
+
+
+{% comment %} <table class="table">
+  {% for object in object_list %}
+    <tr>
+      <td>
+        <div class="container">
+        <img src=
+          {% if not object.picture %}
+            "{% static 'mainapp/img/no_book_photo.png'%}"
+          {% else %}
+            "media/{{ object.picture }}"
+          {% endif %}
+        class="img-fluid" width="250px">
+        
+          <div class="img-stamp" style="position: absolute; top: 0px; left: 0px; background-color: transparent;">
+            <img src="{% static 'mainapp/img/new.png'%}" class="img-fluid" width="96">
+          </div>
+        </div>
+      </td>
+      <td>
+        <h6><b>Название: {{ object.name }}</b></h6>
+        Авторы: 
+          {% for author in object.authors.all %}
+            {{ author.name }}
+            {% if author != object.authors.last %}, {% endif %}
+          {% endfor %}
+        
+        <br>Серия: {{ object.series }}
+        <br>Жанр:
+          {% for genre in object.genres.all %}
+            {{ genre.name }}
+            {% if genre != object.genres.last %}, {% endif %}
+          {% endfor %}
+        <br>Год издания: {{ object.year }}
+        <br>Количество страниц: {{ object.num_pages }}
+        <br>Формат: {{ object.book_format }}
+        <br>ISBN: {{ object.isbn }}
+        <br>Вес: {{ object.weight }} гр.
+        <br>Возрастная категория: {{ object.age_category }}
+        <br>Издательство: {{ object.publisher }}
+        <br>Наличие: {{ object.qty }} шт.
+      </td>
+      <td>
+        <h5>{{ object.cost }} BYN</h5>
+      </td>
+    </tr>
+  {% endfor %}
+</table> {% endcomment %}
+
+{% endblock main_content %}
