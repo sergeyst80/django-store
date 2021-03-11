@@ -1,5 +1,5 @@
-{% load static %}
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+ 
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'homepage' %}"><i class="bi bi-house-door-fill"></i> Главная</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,17 +8,8 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        {% comment %} <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Главная</a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li> {% endcomment %}
-        <li class="nav-item">
-          <a class="nav-link active" href="{% url 'books-catalog' %}">Каталог</a>
+          <a class="nav-link active" href="{% url 'books-catalog' %}"><i class="bi bi-bag-fill"></i> Каталог</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle active" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-book-fill"></i> Справочники</a>
@@ -32,11 +23,24 @@
           </ul>
         </li>
       </ul>
-      
-      <form class="d-flex">
+    
+    <div class="collapse navbar-collapse text-center" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="navitem">
+          <h3 class="navbar-text">{{ user.username }}</h3>
+        </li>
+        <li class="nav-item">
+          {% comment %} {% if user.is_%} {% endcomment %}
+          <a class="nav-link active" aria-current="page" href="{% url 'login' %}?next={{ request.path }}"><i class="bi bi-box-arrow-in-right"></i> Вход</a>
+        </li>
+      </ul>
+    </div>
+
+      <!-- <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      </form> -->
+
     </div>
   </div>
 </nav>

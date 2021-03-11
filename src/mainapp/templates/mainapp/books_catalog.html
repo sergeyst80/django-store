@@ -1,14 +1,10 @@
-{% extends "mainapp/template_main.html" %}
+{% extends "template_main.html" %}
 
 {% load static %}
 
 {% block title %}
     My Book Store
 {% endblock title %}
-
-{% block page_nav_bar %}
-{% include 'mainapp/nav_bar.html' %}
-{% endblock page_nav_bar %}
 
 {% block page_header %}
 
@@ -40,7 +36,7 @@
     <div class="col col-md-auto">
         <img src=
           {% if not object.picture %}
-            "{% static 'mainapp/img/no_book_photo.png'%}"
+            "{% static 'mainapp/img/no_book_photo.png' %}"
           {% else %}
             "media/{{ object.picture }}"
           {% endif %}

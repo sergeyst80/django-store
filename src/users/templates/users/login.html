@@ -1,0 +1,44 @@
+{% extends "template_main.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Авторизация
+{% endblock title %}
+
+{% block page_header %}
+    Введите данные для авторизации:
+{% endblock page_header %}
+
+{% block main_content %}
+
+{% if form.errors %}
+<p>Ваши логин и/или пароль введены некорректно. Попробуйте снова.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>У вашей учетной записи нет доступа к этой странице. Чтобы продолжить,
+войдите в систему с помощью учетной записи, имеющей доступ.</p>
+    {% else %}
+    <p>Пожалуйста пройдите авторизацию для просмотра этой чтраницы.</p>
+    {% endif %}
+{% endif %}
+
+<form method="POST" action="{% url 'login' %}">
+
+    {% csrf_token %}
+    {{ form|crispy }}
+
+    <br>
+
+    <button type="submit" class="btn btn-success" style="width: 200px;">Авторизация</button>
+    <input type="hidden" name="next" value="{{ next }}">
+
+</form>
+
+<br>
+
+<button onclick="history.back()" class="btn btn-secondary" style="width: 200px;">Назад</button>
+
+{% endblock main_content %}

@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -29,8 +30,10 @@
     <style>
       body {
         padding-top: 5rem;
+        background: url("{% static 'mainapp/img/book_store_bg.jpg' %}");
       }
-        .bd-placeholder-img {
+      
+      .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
         -webkit-user-select: none;
@@ -48,19 +51,20 @@
   </head>
 
   <body>
-    {% include 'mainapp/nav_bar.html' %}
+
+    {% include 'nav_bar.html' %}
 
     <main role="main" class="container">
       <div class="starter-template">
-        {% comment %} <div
-          class="alert alert-primary"
-          role="alert"
-          style="text-align: center"
-        >
-          <h3> {% endcomment %}
-          {% block page_header %}{% endblock page_header %}
-          {% comment %} </h3>
-        </div> {% endcomment %}
+
+        {% comment %} <div class="container-fluid">
+        <span class="navbar-text">
+          <img src="{% static 'mainapp/img/book_store.jpg' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
+        </span>
+        
+      </div> {% endcomment %}
+        
+        {% block page_header %}{% endblock page_header %}
 
         {% block main_content %}{% endblock main_content %}
       </div>
