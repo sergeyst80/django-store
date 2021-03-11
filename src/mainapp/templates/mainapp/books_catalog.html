@@ -7,30 +7,56 @@
 {% endblock title %}
 
 {% block page_header %}
-
-    {% comment %} <table class="table">
-      <tr>
-        <td>
-          <img src="{% static 'mainapp/img/books_banner.png' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
-        </td>
-        <td>
-          <img src="{% static 'mainapp/img/news_banner01.jpg' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
-        </td>
-        <td>
-          <img src="{% static 'mainapp/img/books_banner.png' %}" class="img-fluid rounded mx-auto d-block" alt="..."  style="max-height: 10rem;">
-        </td>
-      </tr>
-    </table> {% endcomment %}
-
+  Каталог книг нашего магазина:
 {% endblock page_header %}
 
 {% block main_content %}
 
 <br>
-<br>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-end">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page=1">&laquo;</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo;</a>
+    </li>
+    {% endif %}
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 
 <div class="container">
-{% for object in object_list %}
+{% for object in page_obj %}
   <div class="row">
     <h5 class="alert-primary"><b>{{ object.name }}</b></h5>
     <div class="col col-md-auto">
@@ -45,16 +71,6 @@
     </div>
     <div class="col">
       <table>
-        
-        {% comment %} <tr>
-          <td>
-            <b>Название:</b>
-          </td>
-          <td>
-            {{ object.name }}
-          </td>
-        </tr> {% endcomment %}
-
         <tr>
           <td>
             <b>Авторы:</b>
@@ -84,7 +100,7 @@
             <b>Серия:</b>
           </td>
           <td>
-             {{ object.series }}
+             {% if object.series %}{{ object.series }}{% endif %}
           </td>
         </tr>
 
@@ -93,7 +109,7 @@
             <b>Издательство:</b>
           </td>
           <td>
-             {{ object.publisher }}
+             {% if object.publisher %}{{ object.publisher }}{% endif %}
           </td>
         </tr>
 
@@ -102,7 +118,7 @@
             <b>Год издания:</b>
           </td>
           <td>
-             {{ object.year }}
+             {% if object.year %}{{ object.year }}{% endif %}
           </td>
         </tr>
 
@@ -111,7 +127,7 @@
             <b>Количество страниц:</b>
           </td>
           <td>
-             {{ object.num_pages }}
+             {% if object.num_pages %}{{ object.num_pages }}{% endif %}
           </td>
         </tr>
 
@@ -120,7 +136,7 @@
             <b>Формат:</b>
           </td>
           <td>
-             {{ object.book_format }}
+             {% if object.book_format %}{{ object.book_format }}{% endif %}
           </td>
         </tr>
 
@@ -129,15 +145,15 @@
             <b>ISBN:</b>
           </td>
           <td>
-             {{ object.isbn }}
+             {% if object.isbn %}{{ object.isbn }}{% endif %}
           </td>
         </tr>
         <tr>
           <td>
-            <b>Вес:</b>
+            <b>Вес (гр.):</b>
           </td>
           <td>
-             {{ object.weight }}  гр.
+             {% if object.weight %}{{ object.weight }}{% endif %}
           </td>
         </tr>
         <tr>
@@ -145,7 +161,7 @@
             <b>Возрастная категория:</b>
           </td>
           <td>
-             {{ object.age_category }}
+             {% if object.age_category %}{{ object.age_category }}{% endif %}
           </td>
         </tr>
       </table>

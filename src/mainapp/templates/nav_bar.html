@@ -24,18 +24,22 @@
         </li>
       </ul>
     
-    <div class="collapse navbar-collapse text-center" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="navitem">
-          <h3 class="navbar-text">{{ user.username }}</h3>
-        </li>
-        <li class="nav-item">
-          {% comment %} {% if user.is_%} {% endcomment %}
-          <a class="nav-link active" aria-current="page" href="{% url 'login' %}?next={{ request.path }}"><i class="bi bi-box-arrow-in-right"></i> Вход</a>
-        </li>
-      </ul>
-    </div>
-
+      <b class="text-info text-end">
+        {% if user.first_name %}
+          {{ user.first_name }}
+        {% else %}
+          {{ user.username }}
+        {% endif %}
+      </b>
+      
+      <a class="nav-link active text-white text-end" href=
+        {% if not user.is_authenticated %}
+          "{% url 'login' %}?next={{ request.path }}"><i class="bi bi-box-arrow-in-right"></i> Вход  
+        {% else %}
+          "{% url 'logout' %}?next={{ request.path }}"><i class="bi bi-box-arrow-left"></i> Выход
+        {% endif %}
+      </a>
+     
       <!-- <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
@@ -44,6 +48,3 @@
     </div>
   </div>
 </nav>
-
-
-

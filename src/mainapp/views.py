@@ -18,7 +18,9 @@ class HomePage(generic.TemplateView):
 
 
 class BooksCatalog(generic.ListView):
+    paginate_by = 3
     model = models.BookCard
+    ordering = ['-pk']
     template_name = "mainapp/books_catalog.html"
     
     def get_context_data(self, **kwargs):
