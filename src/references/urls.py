@@ -1,6 +1,8 @@
 from django.urls import path
+from . import views
 
-from references import views
+
+app_name = 'references'
 
 urlpatterns = [
     path('authors-list/', views.AuthorsList.as_view(), name='authors-list'),

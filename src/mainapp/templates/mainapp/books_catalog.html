@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    My Book Store
+    Каталог книг
 {% endblock title %}
 
 {% block page_header %}
@@ -14,190 +14,200 @@
 
 <br>
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-end">
-    {% if page_obj.has_previous %}
-    <li class="page-item">
-      <a class="page-link" href="?page=1">&laquo;</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo;</a>
-    </li>
-    {% endif %}
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+{% if page_obj.paginator.num_pages > 1 %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo;</a>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                </li>
+            {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&rsaquo;</a>
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+        </ul>
+    </nav>
+{% else %}
+    <br>
+{% endif %}
 
-
-
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for object in page_obj %}
+        <div class="col">
+            <div class="card h-100 shadow bg-body text-center">
+                    <img src=
+                        {% if not object.picture %}
+                            "{% static 'mainapp/img/no_book_photo.png' %}"
+                        {% else %}
+                            "/media/{{ object.picture }}"
+                        {% endif %}
+                    class="shadow bg-body rounded-3 mx-auto d-block" style="width: 150px" alt="...">
+                <div class="card-body">
+                    <h6 class="card-title">{{ object.name }}</h6>
+                    <p class="card-text">
+                        <i>
+                            {% for author in object.authors.all %}
+                                {{ author.name }}
+                                {% if author != object.authors.last %}, {% endif %}
+                            {% endfor %}
+                        </i>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                        <h5>{{ object.cost }} BYN</h5>
+                        Рейтинг: {{ object.rating }}<br>
+                        Наличие: {{ object.qty }} шт.<br>
+                        {% if object.is_active %}
+                            <a href="{% url 'cart:add-to-cart' %}?book={{ object.pk }}&next={{ request.get_full_path }}"
+                                class="btn btn-success btn-sm text-bottom
+                                {% if not object.is_active %}
+                                    disabled
+                                {% endif %}">
+                                <i class="bi bi-cart4"></i> В корзину
+                            </a>
+                        {% else %}
+                            Недоступно к заказу
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 </div>
+
+{% comment %} 
+<br>
 
 <div class="container">
 {% for object in page_obj %}
-  <div class="row">
-    <h5 class="alert-primary"><b>{{ object.name }}</b></h5>
-    <div class="col col-md-auto">
-        <img src=
-          {% if not object.picture %}
-            "{% static 'mainapp/img/no_book_photo.png' %}"
-          {% else %}
-            "media/{{ object.picture }}"
-          {% endif %}
-        class="img-fluid" width="250px">
+    <div class="row">
+        <h5 class="alert-primary"><b>{{ object.name }}</b></h5>
+        <div class="col col-md-auto">
+            <img src=
+            {% if not object.picture %}
+                "{% static 'mainapp/img/no_book_photo.png' %}"
+            {% else %}
+                "media/{{ object.picture }}"
+            {% endif %}
+            class="img-fluid" width="250px">
 
+        </div>
+        <div class="col">
+        <table>
+            <tr>
+            <td>
+                <b>Авторы:</b>
+            </td>
+            <td>
+                {% for author in object.authors.all %}
+                {{ author.name }}
+                {% if author != object.authors.last %}, {% endif %}
+                {% endfor %}
+            </td>
+            </tr>
+
+            <tr>
+            <td>
+                <b>Жанр:</b>
+            </td>
+            <td>
+                {% for genre in object.genres.all %}
+                {{ genre.name }}
+                {% if genre != object.genres.last %}, {% endif %}
+                {% endfor %}
+            </td>
+            </tr>
+
+            <tr>
+            <td>
+                <b>Серия:</b>
+            </td>
+            <td>
+                {% if object.series %}{{ object.series }}{% endif %}
+            </td>
+            </tr>
+
+            <tr>
+            <td>
+                <b>Издательство:</b>
+            </td>
+            <td>
+                {% if object.publisher %}{{ object.publisher }}{% endif %}
+            </td>
+            </tr>
+
+            <tr>
+            <td>
+                <b>Год издания:</b>
+            </td>
+            <td>
+                {% if object.year %}{{ object.year }}{% endif %}
+            </td>
+            </tr>
+
+            <tr>
+            <td>
+                <b>Количество страниц:</b>
+            </td>
+            <td>
+                {% if object.num_pages %}{{ object.num_pages }}{% endif %}
+            </td>
+            </tr>
+
+            <tr>
+            <td>
+                <b>Формат:</b>
+            </td>
+            <td>
+                {% if object.book_format %}{{ object.book_format }}{% endif %}
+            </td>
+            </tr>
+
+            <tr>
+            <td>
+                <b>ISBN:</b>
+            </td>
+            <td>
+                {% if object.isbn %}{{ object.isbn }}{% endif %}
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <b>Вес (гр.):</b>
+            </td>
+            <td>
+                {% if object.weight %}{{ object.weight }}{% endif %}
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <b>Возрастная категория:</b>
+            </td>
+            <td>
+                {% if object.age_category %}{{ object.age_category }}{% endif %}
+            </td>
+            </tr>
+        </table>
+
+        </div>
+        <div class="col col-md-auto">
+        <h5>{{ object.cost }} BYN</h5>
+        Наличие: {{ object.qty }} шт.
+        <br><br>
+        <a href="#" class="btn btn-success btn-sm text-bottom {% if not object.is_active %}disabled{% endif %}"><i class="bi bi-cart4"></i> В корзину</a>
+        </div>
     </div>
-    <div class="col">
-      <table>
-        <tr>
-          <td>
-            <b>Авторы:</b>
-          </td>
-          <td>
-            {% for author in object.authors.all %}
-              {{ author.name }}
-              {% if author != object.authors.last %}, {% endif %}
-            {% endfor %}
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <b>Жанр:</b>
-          </td>
-          <td>
-            {% for genre in object.genres.all %}
-              {{ genre.name }}
-              {% if genre != object.genres.last %}, {% endif %}
-            {% endfor %}
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <b>Серия:</b>
-          </td>
-          <td>
-             {% if object.series %}{{ object.series }}{% endif %}
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <b>Издательство:</b>
-          </td>
-          <td>
-             {% if object.publisher %}{{ object.publisher }}{% endif %}
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <b>Год издания:</b>
-          </td>
-          <td>
-             {% if object.year %}{{ object.year }}{% endif %}
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <b>Количество страниц:</b>
-          </td>
-          <td>
-             {% if object.num_pages %}{{ object.num_pages }}{% endif %}
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <b>Формат:</b>
-          </td>
-          <td>
-             {% if object.book_format %}{{ object.book_format }}{% endif %}
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <b>ISBN:</b>
-          </td>
-          <td>
-             {% if object.isbn %}{{ object.isbn }}{% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <b>Вес (гр.):</b>
-          </td>
-          <td>
-             {% if object.weight %}{{ object.weight }}{% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <b>Возрастная категория:</b>
-          </td>
-          <td>
-             {% if object.age_category %}{{ object.age_category }}{% endif %}
-          </td>
-        </tr>
-      </table>
-
-      {% comment %} <h6><b>Название: {{ object.name }}</b></h6>
-        <small>Авторы: 
-          {% for author in object.authors.all %}
-            {{ author.name }}
-            {% if author != object.authors.last %}, {% endif %}
-          {% endfor %}
-        
-        <br>Жанр:
-          {% for genre in object.genres.all %}
-            {{ genre.name }}
-            {% if genre != object.genres.last %}, {% endif %}
-          {% endfor %}
-        <br>Серия: {{ object.series }}
-        <br>Издательство: {{ object.publisher }}
-        <br>Год издания: {{ object.year }}
-        <br>Количество страниц: {{ object.num_pages }}
-        <br>Формат: {{ object.book_format }}
-        <br>ISBN: {{ object.isbn }}
-        <br>Вес: {{ object.weight }} гр.
-        <br>Возрастная категория: {{ object.age_category }}
-        </small> {% endcomment %}
-    </div>
-    <div class="col col-md-auto">
-      <h5>{{ object.cost }} BYN</h5>
-      Наличие: {{ object.qty }} шт.
-      <br><br>
-      <a href="#" class="btn btn-success btn-sm text-bottom {% if not object.is_active %}disabled{% endif %}"><i class="bi bi-cart4"></i> В корзину</a>
-    </div>
-  </div>
-  <br>
+    <br>
 {% endfor %}
-</div>
+</div> {% endcomment %}
 
 
 

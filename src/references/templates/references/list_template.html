@@ -10,32 +10,58 @@
 
 {% block main_content %}
 
+<br>
+
+    {% if page_obj.paginator.num_pages > 1 %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo;</a>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                    </li>
+                {% endif %}
+                    <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&rsaquo;</a>
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                {% endif %}
+            </ul>
+        </nav>
+    {% else %}
+        <br>
+    {% endif %}
+
 
     <table class="table table-sm table-striped table-hover">
 
-        <thead class="table-dark">
+        <thead class="table-primary">
             <th>Id</th>
-            <th>Name</th>
-            <th>Actions</th>
+            <th>Название</th>
+            <th>Действия</th>
         </thead>
         
-        {% for object in object_list %}
+        {% for object in page_obj %}
             <tr>
                 <td>{{ object.pk }}</td>
                 <td>{{ object.name }}</td>
                 <td>
                     {% block dict_actions %}
-                        <a title="Edit" href="{% url 'authors-update' object.pk %}"><i class="bi bi-pencil-square"></i></a>
-                        <a title="Delete" href="{% url 'authors-delete' object.pk %}"><i class="bi bi-trash"></i></a>
+                        {% comment %} <a title="Edit" href="{% url 'references:authors-update' object.pk %}"><i class="bi bi-pencil-square"></i></a>
+                        <a title="Delete" href="{% url 'references:authors-delete' object.pk %}"><i class="bi bi-trash"></i></a> {% endcomment %}
                     {% endblock dict_actions %}
                 </td>
             </tr>
         {% endfor %}
     </table>
+    
     <br>
-    {% block dict_create %}
-        <a href="{% url 'authors-create' %}" class="btn btn-primary" style="width: 200px;">New record</a><br><br>
+
+    {% block dict_create %}     
     {% endblock dict_create %}
-    {% comment %} <a href="{% url 'dicts-list' %}" class="btn btn-secondary" style="width: 200px;">Back</a> {% endcomment %}
 
 {% endblock main_content %}

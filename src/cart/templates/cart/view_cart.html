@@ -1,0 +1,122 @@
+{% extends "template_main.html" %}
+
+{% load static %}
+
+{% block title %}
+    Корзина товаров
+{% endblock title %}
+
+{% block page_header %}
+  Товары в Вашей корзине:
+{% endblock page_header %}
+
+{% block main_content %}
+
+<br>
+
+{% if request.session.books_in_cart %}
+  <form action="{% url 'cart:update-cart' %}">
+    <table class="table table-sm table-striped table-hover">
+      <thead class="table-primary text-center align-middle">
+        <th></th>
+        <th>Наименование</th>
+        <th>Количество</th>
+        <th>Стоимость за ед.</th>
+        <th>Общая стоимость</th>
+        <th></th>
+      </thead>
+      <tbody>
+        {% for book in object.books_in_cart.all %}
+          <tr class="align-middle">
+            <td>
+              <img src="/media/{{ book.book_card.picture }}" class="shadow bg-body rounded-3" style="width: 30px;" alt="...">
+            </td>
+            <td>
+              {{ book.book_card.name }}
+            </td>
+            <td>
+              <input class="text-center" size="5" type="number" min="0" name="{{ book.pk }}" value="{{ book.qty }}">
+            </td>
+            <td class="text-center">
+              {{ book.price }} BYN
+            </td>
+            <td class="text-center">
+              {{ book.get_total_price }} BYN
+            </td>
+            <td class="text-center">
+              <a title="Удалить из корзины" href="{% url 'cart:delete-from-cart' book.pk %}">
+                <i class="bi bi-trash text-danger"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr class="align-middle">
+          <td colspan="2"><b>ИТОГО</b></td>
+          <td class="text-center"><b>{{ object.get_books_count }}</td>
+          <td></td>
+          <td class="text-center"><b>{{ object.get_total_price }} BYN</b></td>
+          <td></td>
+          </tr>
+      </tfoot>
+    </table>
+    <br>
+    <button type="submit" name="btn" value="recalculate" class="btn btn-primary">Пересчитать</button>
+    <button type="submit" name="btn" value="checkout" class="btn btn-success">Оформить заказ</button>
+  </form>
+{% else %}
+  <h1 class="text-danger"><b><i>В Вашей корзине отсутствуют товары!</i></b></h1>
+{% endif %}
+
+
+
+{% comment %} <table class="table">
+  {% for object in object_list %}
+    <tr>
+      <td>
+        <div class="container">
+        <img src=
+          {% if not object.picture %}
+            "{% static 'mainapp/img/no_book_photo.png'%}"
+          {% else %}
+            "media/{{ object.picture }}"
+          {% endif %}
+        class="img-fluid" width="250px">
+        
+          <div class="img-stamp" style="position: absolute; top: 0px; left: 0px; background-color: transparent;">
+            <img src="{% static 'mainapp/img/new.png'%}" class="img-fluid" width="96">
+          </div>
+        </div>
+      </td>
+      <td>
+        <h6><b>Название: {{ object.name }}</b></h6>
+        Авторы: 
+          {% for author in object.authors.all %}
+            {{ author.name }}
+            {% if author != object.authors.last %}, {% endif %}
+          {% endfor %}
+        
+        <br>Серия: {{ object.series }}
+        <br>Жанр:
+          {% for genre in object.genres.all %}
+            {{ genre.name }}
+            {% if genre != object.genres.last %}, {% endif %}
+          {% endfor %}
+        <br>Год издания: {{ object.year }}
+        <br>Количество страниц: {{ object.num_pages }}
+        <br>Формат: {{ object.book_format }}
+        <br>ISBN: {{ object.isbn }}
+        <br>Вес: {{ object.weight }} гр.
+        <br>Возрастная категория: {{ object.age_category }}
+        <br>Издательство: {{ object.publisher }}
+        <br>Наличие: {{ object.qty }} шт.
+      </td>
+      <td>
+        <h5>{{ object.cost }} BYN</h5>
+      </td>
+    </tr>
+  {% endfor %}
+</table> {% endcomment %}
+
+{% endblock main_content %}

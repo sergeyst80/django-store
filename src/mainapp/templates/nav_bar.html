@@ -11,40 +11,64 @@
         <li class="nav-item">
           <a class="nav-link active" href="{% url 'books-catalog' %}"><i class="bi bi-bag-fill"></i> Каталог</a>
         </li>
+        {% if perms.references.view_authors %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-book-fill"></i> Справочники</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="{% url 'references:authors-list' %}">Авторы</a></li>
+              <li><a class="dropdown-item" href="{% url 'references:genres-list' %}">Жанры</a></li>
+              <li><a class="dropdown-item" href="{% url 'references:series-list' %}">Серии</a></li>
+              <li><a class="dropdown-item" href="{% url 'references:publishers-list' %}">Издательства</a></li>
+              <li><a class="dropdown-item" href="{% url 'references:age_categories-list' %}">Возрастные категории</a></li>
+              <li><a class="dropdown-item" href="{% url 'references:book_formats-list' %}">Форматы книг</a></li>
+            </ul>
+          </li>
+        {% endif %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-book-fill"></i> Справочники</a>
+          <a class="nav-link dropdown-toggle active text-info" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle"></i> 
+            <b>
+              {% if not user.is_authenticated %}
+                
+              {% else %}
+                {% if user.first_name %}
+                  {{ user.first_name }}
+                {% else %}
+                  {{ user.username }}
+                {% endif %}
+              {% endif %}
+            </b>
+          </a>
           <ul class="dropdown-menu" aria-labelledby="dropdown01">
-            <li><a class="dropdown-item" href="{% url 'authors-list' %}">Авторы</a></li>
-            <li><a class="dropdown-item" href="{% url 'genres-list' %}">Жанры</a></li>
-            <li><a class="dropdown-item" href="{% url 'series-list' %}">Серии</a></li>
-            <li><a class="dropdown-item" href="{% url 'publishers-list' %}">Издательства</a></li>
-            <li><a class="dropdown-item" href="{% url 'age_categories-list' %}">Возрастные категории</a></li>
-            <li><a class="dropdown-item" href="{% url 'book_formats-list' %}">Форматы книг</a></li>
+            {% if not user.is_authenticated %}
+              <li>
+                <a class="dropdown-item" href="{% url 'users:login' %}?next={{ request.path }}"><i class="bi bi-box-arrow-in-right"></i> Вход</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'users:create-user' %}"><i class="bi bi-person-plus-fill"></i> Регистрация</a>  
+              </li>
+            {% else %}
+              <li>
+                <a class="dropdown-item" href="{% url 'users:update-user' %}"><i class="bi bi-info-circle"></i> Профиль</a>
+              </li>
+              </li>
+                <a class="dropdown-item" href="#"><i class="bi bi-bag"></i> Заказы</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'users:logout' %}"><i class="bi bi-box-arrow-left"></i> Выход</a>
+              </li>
+            {% endif %}
           </ul>
         </li>
       </ul>
-    
-      <b class="text-info text-end">
-        {% if user.first_name %}
-          {{ user.first_name }}
-        {% else %}
-          {{ user.username }}
-        {% endif %}
-      </b>
-      
-      <a class="nav-link active text-white text-end" href=
-        {% if not user.is_authenticated %}
-          "{% url 'login' %}?next={{ request.path }}"><i class="bi bi-box-arrow-in-right"></i> Вход  
-        {% else %}
-          "{% url 'logout' %}?next={{ request.path }}"><i class="bi bi-box-arrow-left"></i> Выход
-        {% endif %}
-      </a>
-     
-      <!-- <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form> -->
-
     </div>
+      <a href="{% url 'cart:view-cart' %}" class="btn btn-success">
+        <i class="bi bi-cart4"></i>
+          {% if request.session.books_in_cart %}
+            <span class="badge bg-light text-dark">
+                {{ request.session.books_in_cart }}
+            </span>
+          {% endif %}
+      </a>
   </div>
 </nav>

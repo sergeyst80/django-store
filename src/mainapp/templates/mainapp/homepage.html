@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    My Book Store
+Главная
 {% endblock title %}
 
 {% block page_header %}
@@ -36,18 +36,21 @@
         <div class="card mb-3 border-light text-dark container-fluid" style="max-width: 480px; text-align: center;">
           <div class="row g-0">
             <div class="col-md-4">
-              <img src="{% if not object.picture %}{% static 'mainapp/img/no_book_photo.png'%}{% else %}media/{{ object.picture }}{% endif %}"" class="img-fluid">
-              <div class="container">
-                {% comment %} <div class="img-stamp" style="position: absolute; top: 0px; left: 0px; background-color: transparent;">
-                  <img src="{% static 'mainapp/img/new.png'%}" class="img-fluid" width="96">
-                </div> {% endcomment %}
-              </div>
+              <img src="{% if not object.picture %}{% static 'mainapp/img/no_book_photo.png'%}{% else %}media/{{ object.picture }}{% endif %}" class="img-fluid">
             </div>
             <div class="col-md-8">
               <div class="card-body">
                 <h5 class="card-title">{{ object.name }}</h5>
                 <p class="card-text">{{ object.get_authors }}</p>
-                <p class="card-text"><small class="text-muted"><a href="#" class="btn btn-success btn-sm text-bottom"><i class="bi bi-cart4"></i> В корзину</a></small></p>
+                <p class="card-text"><small class="text-muted">
+                  <a href="{% url 'cart:add-to-cart' %}?book={{ object.pk }}&next={{ request.get_full_path }}"
+                    class="btn btn-success btn-sm text-bottom
+                    {% if not object.is_active %}
+                      disabled
+                    {% endif %}">
+                    <i class="bi bi-cart4"></i> В корзину
+                  </a>
+                </p>
               </div>
             </div>
           </div>

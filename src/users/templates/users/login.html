@@ -12,7 +12,7 @@
 
 {% block main_content %}
 
-<form method="POST" action="{% url 'login' %}">
+<form method="POST" action="{% url 'users:login' %}">
 
     {% csrf_token %}
     {{ form|crispy }}
@@ -20,12 +20,9 @@
     <br>
 
     <button type="submit" class="btn btn-success" style="width: 200px;">Авторизация</button>
+    <button onclick="history.back()" class="btn btn-secondary" style="width: 200px;">Назад</button>
     <input type="hidden" name="next" value="{{ next }}">
 
 </form>
-
-<br>
-
-<button onclick="history.back()" class="btn btn-secondary" style="width: 200px;">Назад</button>
 
 {% endblock main_content %}

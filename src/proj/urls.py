@@ -14,21 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth import views
 
-from references import views as refs_views, urls as refs_urls
+
 from mainapp import views as main_views
+from references import urls as refs_urls
 from users import urls as users_urls
+from cart import urls as cart_urls
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main_views.HomePage.as_view(), name='homepage'),
     path('books-catalog', main_views.BooksCatalog.as_view(), name='books-catalog'),
-    path('references/', include(refs_urls)),
-    path('users/', include(users_urls)),
+    path('references/', include(refs_urls, namespace='references')),
+    path('users/', include(users_urls, namespace='users')),
+    path('cart/', include(cart_urls, namespace='cart')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

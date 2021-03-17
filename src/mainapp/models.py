@@ -20,8 +20,6 @@ class BookCard(models.Model):
         verbose_name='Цена (BYN)',
         max_digits=10,
         decimal_places=2,
-        null=True,
-        blank=True,
         default=0.0
     )
     
@@ -46,14 +44,12 @@ class BookCard(models.Model):
 
     year = models.SmallIntegerField(
         verbose_name='Год издания',
-        null=True,
-        blank=True
+        default=1900
     )
 
     num_pages = models.SmallIntegerField(
         verbose_name='Количество страниц',
-        null=True,
-        blank=True
+        default=0
     )
 
     book_format = ForeignKey(
@@ -72,8 +68,7 @@ class BookCard(models.Model):
 
     weight = models.SmallIntegerField(
         verbose_name='Вес (гр)',
-        null=True,
-        blank=True
+        default=0
     )
 
     age_category = ForeignKey(
@@ -92,8 +87,6 @@ class BookCard(models.Model):
 
     qty = models.SmallIntegerField(
         verbose_name='Наличие (шт)',
-        null=True,
-        blank=True,
         default=0
     )
 
@@ -104,9 +97,7 @@ class BookCard(models.Model):
 
     rating = models.FloatField(
         verbose_name='Рейтинг',
-        default=0.0,
-        null=True,
-        blank=True   
+        default=0.0  
     )
 
     create_date = models.DateTimeField(
@@ -126,4 +117,4 @@ class BookCard(models.Model):
         return "\n".join([p.name for p in self.genres.all()])
 
     def __str__(self):
-        return f'{self.pk}, {self.name}'
+        return self.name

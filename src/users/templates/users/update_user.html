@@ -1,0 +1,28 @@
+{% extends "template_main.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Редактирование данных пользователя
+{% endblock title %}
+
+{% block page_header %}
+    Введите/измените необходимые данные пользователя {{ user.username }}:
+{% endblock page_header %}
+
+{% block main_content %}
+
+<form method="POST" action="">
+
+    {% csrf_token %}
+    {{ form|crispy }}
+    {{ form_ext|crispy }}
+
+    <br>
+
+    <button type="submit" class="btn btn-success" style="width: 200px;">Сохранить</button>
+    <button onclick="history.back()" class="btn btn-secondary" style="width: 200px;">Назад</button>
+
+</form>
+
+{% endblock main_content %}

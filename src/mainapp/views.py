@@ -18,7 +18,7 @@ class HomePage(generic.TemplateView):
 
 
 class BooksCatalog(generic.ListView):
-    paginate_by = 3
+    paginate_by = 12
     model = models.BookCard
     ordering = ['-pk']
     template_name = "mainapp/books_catalog.html"
