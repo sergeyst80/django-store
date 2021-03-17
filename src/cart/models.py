@@ -8,10 +8,20 @@ class CustomerCart(models.Model):
     customer = models.ForeignKey(
         auth_models.User,
         on_delete=models.PROTECT,
-        verbose_name='Пользователь',
-        related_name='user_carts',
+        verbose_name='Покупатель',
+        related_name='cutomer_carts',
         blank=False,
         null=True
+    )
+
+    create_date = models.DateTimeField(
+        verbose_name='Дата создания',
+        auto_now_add=True
+    )
+
+    update_date = models.DateTimeField(
+        verbose_name='Дата изменения',
+        auto_now=True
     )
 
     @property
@@ -33,13 +43,13 @@ class CustomerCart(models.Model):
         return total_price
 
     def __str__(self):
-        return f'Customer cart # {self.pk}'
+        return f'Корзина #{self.pk}'
 
 class BooksInCart(models.Model):
     customer_cart = models.ForeignKey(
         'CustomerCart',
         on_delete=models.PROTECT,
-        verbose_name='Корзинка',
+        verbose_name='Корзина товаров',
         related_name='books_in_cart',
         blank=False,
         null=True   
@@ -60,6 +70,16 @@ class BooksInCart(models.Model):
         verbose_name='Стоимость',
         max_digits=5,
         decimal_places=2
+    )
+
+    create_date = models.DateTimeField(
+        verbose_name='Дата создания',
+        auto_now_add=True
+    )
+
+    update_date = models.DateTimeField(
+        verbose_name='Дата изменения',
+        auto_now=True
     )
 
     @property

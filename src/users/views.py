@@ -45,8 +45,7 @@ class UserLoginView(auth_views.LoginView):
 
 
 class UserLogoutView(auth_views.LogoutView):
-    next_page = reverse_lazy('homepage')
-    
+    next_page = reverse_lazy('homepage')    
 
 
 class UserUpdateView(LoginRequiredMixin, generic.UpdateView):

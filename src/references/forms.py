@@ -36,3 +36,4 @@ class BookFormatsForm(forms.ModelForm):
     class Meta:
         model = models.BookFormats
         fields = ['name']
+        

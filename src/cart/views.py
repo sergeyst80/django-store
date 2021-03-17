@@ -77,4 +77,3 @@ class UpdateCart(generic.RedirectView):
             return reverse('homepage')
         else:
             return reverse('cart:view-cart')
-            

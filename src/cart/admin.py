@@ -5,20 +5,11 @@ from cart import models
 
 
 class CustomerCartAdmin(admin.ModelAdmin):
-    list_display = [
-        'pk', 
-        'customer',
-    ]
+    list_display = [field.name for field in models.CustomerCart._meta.fields]
 
 
 class BooksInCartAdmin(admin.ModelAdmin):
-    list_display = [
-        'pk', 
-        'customer_cart',
-        'book_card',
-        'qty',
-        'price'
-    ]
+    list_display = [field.name for field in models.BooksInCart._meta.fields]
 
 
 admin.site.register(models.CustomerCart, CustomerCartAdmin)

@@ -101,12 +101,12 @@ class BookCard(models.Model):
     )
 
     create_date = models.DateTimeField(
-        verbose_name='Дата создания карточки',
+        verbose_name='Дата создания',
         auto_now_add=True
     )
 
     update_date = models.DateTimeField(
-        verbose_name='Дата изменения карточки',
+        verbose_name='Дата изменения',
         auto_now=True
     )
 
