@@ -48,7 +48,7 @@ class CustomerCart(models.Model):
 class BooksInCart(models.Model):
     customer_cart = models.ForeignKey(
         'CustomerCart',
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         verbose_name='Корзина товаров',
         related_name='books_in_cart',
         blank=False,
@@ -87,4 +87,4 @@ class BooksInCart(models.Model):
         return self.qty * self.price
 
     def __str__(self):
-        return f'{self.book_card}, {self.qty} шт., {self.price} BYN'
+        return f'{self.book_card}, {self.qty} шт., {self.get_total_price} BYN'

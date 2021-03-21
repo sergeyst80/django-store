@@ -1,0 +1,232 @@
+{% extends "template_main.html" %}
+
+{% load static %}
+
+{% block title %}
+    Сведения о заказе
+{% endblock title %}
+
+{% block page_header %}
+  Сведения о заказе #{{ object.pk }}:
+{% endblock page_header %}
+
+{% block main_content %}
+
+<br>
+
+<ul class="nav nav-tabs" style="background-color: #e3f2fd;" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true"><b>Описание заказа</b></button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="book-comment-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false"><b>Комментарии</b></button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+    
+    <br>
+
+    <table class="table table-sm">
+      <tbody>
+          <tr>
+            <td>
+              <b>Статус заказа:</b>
+            </td>
+            <td>
+              {{ object.status }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Покупатель:</b> 
+            </td>
+            <td>
+              {{ object.customer_cart.customer.first_name }} 
+              {{ object.customer_cart.customer.last_name }} 
+              (<i>{% if object.customer_cart.customer.username %}
+                {{ object.customer_cart.customer.username }}
+              {% else %}
+                Anonymous
+              {% endif %}</i>)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>E-mail:</b>
+            </td>
+            <td>
+              {{ object.email }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Телефон:</b>
+            </td>
+            <td>
+              {{ object.phone }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Адрес доставки:</b>
+            </td>
+            <td>
+              {{ object.address1 }}, {{ object.address2 }}
+              <br>
+              {{ object.post_index }}, {{ object.city }}, {{ object.country }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Дата оформления:</b>
+            </td>
+            <td>
+              {{ object.create_date }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Дата изменения:</b>
+            </td>
+            <td>
+              {{ object.update_date }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Сумма заказа:</b>
+            </td>
+            <td>
+              {{ object.customer_cart.get_total_price }} BYN
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Товары:</b>
+            </td>
+            <td>
+              <ol class="list-group">
+                {% for item in object.customer_cart.books_in_cart.all %}
+                  <li>
+                    {{ item }}
+                  </li>
+                {% endfor %}
+              </ol>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+    <a href="{% url 'orders:view-orders' %}" class="btn btn-primary btn-sm" style="width: 200px;">К списку заказов</a><br><br>
+
+  </div>
+  <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="book-comment-tab">
+    <br>
+    <h5>Оставить комментарий к заказу:</h5>
+
+    <form action="{% url 'orders:send-comment' %}" method="POST">
+      {% csrf_token %}
+
+      <div class="container">
+        <b>Оценка: </b>
+        <div class="form-check form-sm form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio1" value="1">
+          <label class="form-check-label" for="inlineRadio1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio2" value="2">
+          <label class="form-check-label" for="inlineRadio2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="3">
+          <label class="form-check-label" for="inlineRadio3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="4">
+          <label class="form-check-label" for="inlineRadio3">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="5">
+          <label class="form-check-label" for="inlineRadio3">5</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="6">
+          <label class="form-check-label" for="inlineRadio3">6</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="7">
+          <label class="form-check-label" for="inlineRadio3">7</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="8">
+          <label class="form-check-label" for="inlineRadio3">8</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="9">
+          <label class="form-check-label" for="inlineRadio3">9</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="10">
+          <label class="form-check-label" for="inlineRadio3">10</label>
+        </div>
+      </div>
+
+      <p><textarea name="comment" cols="100" rows="4"></textarea></p>
+      <p><input type="submit" class="btn btn-primary" value="Отправить"></p>
+      <input type="hidden" name="pk" value="{{ object.pk }}">
+    </form>
+    <hr>
+    <h5>Комментарии:</h5>
+    {% if object.comments.all.count %}
+      <table class="table table-sm align-middle">
+        <tbody>
+          {% for comment in object.comments.all|dictsortreversed:"pk" %}
+            <tr class="table-primary">
+              <td class="text-start">
+                <b>{{ comment.user }}
+              </td>
+              <td class="text-center">
+                <b>Оценка: {% if comment.rating %}{{ comment.rating }}{% else %}-{% endif %}
+              </td>
+              <td class="text-end">
+                <b>{{ comment.create_date }}</b>
+              </td>
+            </tr>
+            <tr class="table">
+              <td colspan="2">
+                <i>{{ comment.comment }}</i>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+      <h6><i>Комментарии отсутствуют</i></h6>
+    {% endif %}
+
+    <br>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+{% endblock main_content %}

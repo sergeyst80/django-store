@@ -13,16 +13,14 @@ class ExtUserData(models.Model):
     
     phone = models.CharField(
         verbose_name='Телефон',
-        max_length=80,
-        blank=True,
-        default=''
+        max_length=80
     )
     
     country = models.CharField(
         verbose_name='Страна',
         max_length=80,
         blank=True,
-        default='Беларусь'
+        default=''
     )
 
     city = models.CharField(

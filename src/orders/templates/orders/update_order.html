@@ -1,0 +1,75 @@
+{% extends "template_main.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Добавление/Редактирвание данных
+{% endblock title %}
+
+{% block page_header %}
+    Изменение данных заказа:
+{% endblock page_header %}
+
+{% block main_content %}
+    
+<form class="form-control-sm" action="" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <br>
+    <button type="submit" class="btn btn-success btn-sm" style="width: 200px;">Сохранить</button>
+    <a class="btn btn-secondary btn-sm" title="К списку заказов" href="{% url 'orders:view-orders' %}" style="width: 200px;">К списку заказов</i></a>
+</form>
+<hr>
+<h3><b>Изменение списка товаров:</b></h3>
+    
+<form action="{% url 'orders:update-order-cart' %}" method="GET">
+    <table class="table table-sm">
+        <thead class="table-primary text-center align-middle">
+        <th></th>
+        <th>Наименование</th>
+        <th>Количество</th>
+        <th>Стоимость за ед.</th>
+        <th>Общая стоимость</th>
+        <th></th>
+        </thead>
+        <tbody>
+        {% for book in object.customer_cart.books_in_cart.all %}
+            <tr class="align-middle">
+            <td>
+                <img src="/media/{{ book.book_card.picture }}" class="shadow bg-body rounded-3" style="width: 30px;" alt="...">
+            </td>
+            <td>
+                {{ book.book_card.name }}
+            </td>
+            <td>
+                <input class="text-center" size="5" type="number" min="0" name="{{ book.pk }}" value="{{ book.qty }}">
+            </td>
+            <td class="text-center">
+                {{ book.price }} BYN
+            </td>
+            <td class="text-center">
+                {{ book.get_total_price }} BYN
+            </td>
+            <td class="text-center">
+                <a title="Удалить из корзины" href="{% url 'cart:delete-from-cart' book.pk %}">
+                <i class="bi bi-trash text-danger"></i>
+                </a>
+            </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr class="align-middle">
+            <td colspan="2"><b>ИТОГО</b></td>
+            <td class="text-center"><b>{{ object.customer_cart.get_books_count }}</td>
+            <td></td>
+            <td class="text-center"><b>{{ object.customer_cart.get_total_price }} BYN</b></td>
+            <td></td>
+            </tr>
+        </tfoot>
+    </table>
+    <button name="btn" value="{{ object.pk }}" type="submit" class="btn btn-success btn-sm" style="width: 200px;">Сохранить</button>
+    <a class="btn btn-secondary btn-sm" title="К списку заказов" href="{% url 'orders:view-orders' %}" style="width: 200px;">К списку заказов</i></a>
+</form>
+
+{% endblock main_content %}

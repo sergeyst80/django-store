@@ -51,24 +51,31 @@
               <li>
                 <a class="dropdown-item" href="{% url 'users:update-user' %}"><i class="bi bi-info-circle"></i> Профиль</a>
               </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'orders:view-orders' %}"><i class="bi bi-bag"></i> Заказы</a>
               </li>
-                <a class="dropdown-item" href="#"><i class="bi bi-bag"></i> Заказы</a>
-              </li>
+              {% if user.is_staff %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'storemanager:list-bookcards' %}"><i class="bi bi-card-list"></i></i> Список товаров</a>
+                </li>
+              {% endif %}
               <li>
                 <a class="dropdown-item" href="{% url 'users:logout' %}"><i class="bi bi-box-arrow-left"></i> Выход</a>
               </li>
             {% endif %}
           </ul>
         </li>
+        <li>
+          <a href="{% url 'cart:view-cart' %}" class="btn btn-success">
+            <i class="bi bi-cart4"></i>
+              {% if request.session.books_in_cart %}
+                <span class="badge bg-light text-dark">
+                    {{ request.session.books_in_cart }}
+                </span>
+              {% endif %}
+          </a>
+       </li>
       </ul>
     </div>
-      <a href="{% url 'cart:view-cart' %}" class="btn btn-success">
-        <i class="bi bi-cart4"></i>
-          {% if request.session.books_in_cart %}
-            <span class="badge bg-light text-dark">
-                {{ request.session.books_in_cart }}
-            </span>
-          {% endif %}
-      </a>
   </div>
 </nav>

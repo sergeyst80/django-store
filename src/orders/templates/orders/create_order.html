@@ -1,0 +1,31 @@
+{% extends "template_main.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Оформление заказа #{{ object.pk }}
+{% endblock title %}
+
+{% block page_header %}
+  Введите/измените данные заказа:
+{% endblock page_header %}
+
+{% block main_content %}
+
+{% if user.is_anonymous %}
+  <p>Пожалуйста зарегистрируйтесь или войдите с помощью своего профиля, чтобы иметь возможность отслеживать Ваши заказы и оставлять комментарии в магазине.
+  <p>Войдите через меню пользователя или кликните по <a href=""> ссылке</a>
+{% endif %}
+
+<br>
+
+<form class="form-control-sm" action="" method="POST">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <br>
+  <a href="{% url 'cart:view-cart' %}" class="btn btn-primary btn-sm" style="width: 200px;">В корзину</a>
+  <button type="submit" class="btn btn-success btn-sm" style="width: 200px;">Оформить</button>
+</form>
+
+
+{% endblock main_content %}

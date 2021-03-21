@@ -1,0 +1,91 @@
+{% extends "template_main.html" %}
+
+{% load static %}
+
+{% block title %}
+    Список товаров
+{% endblock title %}
+
+{% block page_header %}
+  Список товаров:
+{% endblock page_header %}
+
+{% block main_content %}
+
+{% if page_obj.paginator.num_pages > 1 %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo;</a>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                </li>
+            {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&rsaquo;</a>
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+        </ul>
+    </nav>
+{% else %}
+    <br>
+{% endif %}
+
+<table class="table table-sm">
+  <thead class="table-primary text-center align-middle">
+    <th>№ товара</th>
+    <th>Название</th>
+    <th>Стоимость</th>
+    <th>ISBN</th>
+    <th>Количество, шт.</th>
+    <th>Доступно к заказу</th>
+    <th>Добавлен</th>
+    <th>Изменен</th>
+    <th>Действия</th>
+  </thead>
+  <tbody>
+    {% for object in page_obj %}
+      <tr class="align-middle text-center">
+        <td>
+          {{ object.pk }}
+        </td>
+        <td class="text-start">
+          {{ object.name }}
+        </td>
+        <td>
+          {{ object.cost }}
+        </td>
+        <td>
+          {{ object.isbn }}
+        </td>
+        <td>
+          {{ object.qty }}
+        </td>
+        <td>
+          <input type="checkbox" {% if object.is_active %}checked{% endif %} disabled>
+        </td>
+        <td>
+          {{ object.create_date }}
+        </td>
+        <td>
+          {{ object.update_date }}
+        </td>
+        <td>
+          <a title="Подробное описание" href="{% url 'storemanager:detail-bookcard' object.pk %}"><i class="bi bi-eye-fill"></i></a>
+          <a title="Редактирование" href="{% url 'storemanager:update-bookcard' object.pk %}"><i class="bi bi-pencil-square"></i></a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+
+<a href="{% url 'storemanager:create-bookcard' %}" class="btn btn-sm btn-primary" style="width: 200px;">Добавить</a>
+
+{% endblock main_content %}

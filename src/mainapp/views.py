@@ -1,8 +1,11 @@
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views import generic
+from django.db.models import Q
 
-from mainapp import models
+from mainapp import models, forms
+from users import utils as users_utils
+from references import models as refs_models
 
 
 # Create your views here.
@@ -27,4 +30,62 @@ class BooksCatalog(generic.ListView):
         context = super().get_context_data(**kwargs)
         new_books = self.model.objects.all().order_by('-pk')[0:9]
         context['new_books'] = new_books
+        context['search_form'] = forms.CatalogSearchForm(
+            initial={
+                'search': self.request.GET.get('search')
+            }
+        )
         return context
+
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+        queryset = super().get_queryset()
+
+        if search:
+            queryset = queryset.filter(
+                Q(name__icontains=search) | 
+                Q(authors__in=refs_models.Authors.objects.filter(name__icontains=search)) | 
+                Q(series__name__icontains=search) |
+                Q(genres__in=refs_models.Genres.objects.filter(name__icontains=search)) |
+                Q(publisher__name__icontains=search)
+            )
+        
+        return queryset
+
+
+class DetailBookView(generic.DetailView):
+    model = models.BookCard
+    template_name = "mainapp/detail_book.html"
+
+
+class SendBookCommentView(generic.RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        comment = self.request.POST.get('comment')
+        pk = self.request.POST.get('pk')
+        rating = self.request.POST.get('rating')
+
+        if comment and pk:
+            bookcard = models.BookCard.objects.filter(pk=pk).first()
+            comments = bookcard.comments.all()
+            sum = 0.0
+            count = 0
+
+            if comments and rating:
+                
+                for item in comments:
+                    if item.rating:
+                        sum += item.rating
+                        count += 1
+
+                bookcard.rating = (int(rating) + sum) / (count + 1)
+                bookcard.save()
+            
+            comments = models.BookComments.objects.create(
+                bookcard=models.BookCard.objects.filter(pk=pk).first(),
+                user=users_utils.get_current_customer(self),
+                comment=comment,
+                rating = rating
+            )
+            comments.save()
+        
+        return reverse('detail-book', args=[pk])

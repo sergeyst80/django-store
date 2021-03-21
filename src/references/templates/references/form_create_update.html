@@ -18,8 +18,8 @@
         {% csrf_token %}
         {{ form|crispy }}
         <br>
-        <button type="submit" class="btn btn-success" style="width: 200px;">Сохранить</button>
-        <button onclick="history.back()" class="btn btn-secondary" style="width: 200px;">Назад</button>
+        <button type="submit" class="btn btn-success btn-sm" style="width: 200px;">Сохранить</button>
+        <button onclick="history.back()" class="btn btn-secondary btn-sm" style="width: 200px;">Назад</button>
     </form>
     
 {% endblock main_content %}

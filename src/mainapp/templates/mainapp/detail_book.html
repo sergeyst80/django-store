@@ -1,0 +1,289 @@
+{% extends "template_main.html" %}
+
+{% load static %}
+
+{% block title %}
+    Карточка товара
+{% endblock title %}
+
+{% block page_header %}
+  {% comment %} Карточка товара №{{ object.pk }}: {% endcomment %}
+{% endblock page_header %}
+
+{% block main_content %}
+
+<ul class="nav nav-tabs" style="background-color: #e3f2fd;" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true"><b>Описание товара</b></button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="book-comment-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false"><b>Комментарии</b></button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+  
+    <br>
+    <table class="table table-sm align-middle">
+      <thead>
+            <th colspan="3">
+              <h5><b>{{ object.name }}</b?</h5>
+            </th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="17" class="gx-5">
+            <div class="container">
+              <img width="300px" 
+                src={% if not object.picture %}
+                  "{% static 'mainapp/img/no_book_photo.png' %}"
+                {% else %}
+                  "/media/{{ object.picture }}"
+                {% endif %}
+              >
+            </div>
+          </td>
+          <tr>
+            <td>
+              <b>Стоимость:</b>
+            </td>
+            <td>
+              {{ object.cost }}, BYN
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Авторы:</b>
+            </td>
+            <td>
+              {% for item in object.authors.all %}
+                {% if item != object.authors.all.0 %} | {% endif %}
+                  {{ item }}
+              {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Серия:</b>
+            </td>
+            <td>
+              {{ object.series }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Жанры:</b>
+            </td>
+            <td>
+              {% for item in object.genres.all %}
+                {% if item != object.genres.all.0 %} | {% endif %}
+                  {{ item }}
+              {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Год издания:</b>
+            </td>
+            <td>
+              {{ object.year }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Количество страниц:</b>
+            </td>
+            <td>
+              {{ object.num_pages }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Формат:</b>
+            </td>
+            <td>
+              {{ object.book_format }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>ISBN:</b>
+            </td>
+            <td>
+              {{ object.isbn }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Вес:</b>
+            </td>
+            <td>
+              {{ object.weight }}, гр.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Возрастная категория:</b>
+            </td>
+            <td>
+              {{ object.age_category }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Издательство:</b>
+            </td>
+            <td>
+              {{ object.publisher }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Количество книг в наличии:</b>
+            </td>
+            <td>
+              {{ object.qty }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Доступен к заказу:</b>
+            </td>
+            <td>
+              {% if object.is_active %}Да{% else %}Нет{% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Рейтинг:</b>
+            </td>
+            <td>
+              {{ object.rating }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Дата добавления в каталог:</b>
+            </td>
+            <td>
+              {{ object.create_date }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Дата последнего изменения карточки:</b>
+            </td>
+            <td>
+              {{ object.update_date }}
+            </td>
+          </tr>
+        </tr>
+      </tbody>
+    </table>
+
+    <a href="{% url 'books-catalog' %}" class="btn btn-secondary btn-sm" style="width: 200px;">Вернуться в каталог</a>
+
+    {% if object.is_active %}
+      <a href="{% url 'cart:add-to-cart' %}?book={{ object.pk }}&next={{ request.get_full_path }}"
+          style="width: 200px;" class="btn btn-success btn-sm
+          {% if not object.is_active %}
+              disabled
+          {% endif %}">
+          <i class="bi bi-cart4"></i> В корзину
+      </a>
+    {% endif %}
+
+    <br>
+  </div>
+  <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="book-comment-tab">
+    <br>
+    <h5>Оставить комментарий к товару:</h5>
+
+    <form action="{% url 'send-comment' %}" method="POST">
+      {% csrf_token %}
+
+      <div class="container">
+        <b>Оценка: </b>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio1" value="1">
+          <label class="form-check-label" for="inlineRadio1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio2" value="2">
+          <label class="form-check-label" for="inlineRadio2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="3">
+          <label class="form-check-label" for="inlineRadio3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="4">
+          <label class="form-check-label" for="inlineRadio3">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="5">
+          <label class="form-check-label" for="inlineRadio3">5</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="6">
+          <label class="form-check-label" for="inlineRadio3">6</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="7">
+          <label class="form-check-label" for="inlineRadio3">7</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="8">
+          <label class="form-check-label" for="inlineRadio3">8</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="9">
+          <label class="form-check-label" for="inlineRadio3">9</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="rating" id="inlineRadio3" value="10">
+          <label class="form-check-label" for="inlineRadio3">10</label>
+        </div>
+      </div>
+
+      <p><textarea name="comment" cols="100" rows="4"></textarea></p>
+      <p><input type="submit" class="btn btn-primary" value="Отправить"></p>
+      <input type="hidden" name="pk" value="{{ object.pk }}">
+    </form>
+    <hr>
+    <h5>Комментарии:</h5>
+    {% if object.comments.all.count %}
+      <table class="table table-sm align-middle">
+        <tbody>
+          {% for comment in object.comments.all|dictsortreversed:"pk" %}
+            <tr class="table-primary">
+              <td class="text-start">
+                <b>{{ comment.user }}
+              </td>
+              <td class="text-center">
+                <b>Оценка: {% if comment.rating %}{{ comment.rating }}{% else %}-{% endif %}
+              </td>
+              <td class="text-end">
+                <b>{{ comment.create_date }}</b>
+              </td>
+            </tr>
+            <tr class="table">
+              <td colspan="2">
+                <i>{{ comment.comment }}</i>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+      <h6><i>Комментарии отсутствуют</i></h6>
+    {% endif %}
+
+    <br>
+  </div>
+</div>
+
+<br>
+
+{% endblock main_content %}

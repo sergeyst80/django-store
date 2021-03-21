@@ -4,7 +4,12 @@ from django.contrib import admin
 from mainapp import models
 
 
-class MainAppAdmin(admin.ModelAdmin):
+class BookCardAdmin(admin.ModelAdmin):
     list_display = [field.name for field in models.BookCard._meta.fields]
 
-admin.site.register(models.BookCard, MainAppAdmin)
+
+class BookCommentsAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in models.BookComments._meta.fields]
+
+admin.site.register(models.BookCard, BookCardAdmin)
+admin.site.register(models.BookComments, BookCommentsAdmin)

@@ -1,0 +1,94 @@
+{% extends "template_main.html" %}
+
+{% load static %}
+
+{% block title %}
+    Список заказов
+{% endblock title %}
+
+{% block page_header %}
+  Список заказов:
+{% endblock page_header %}
+
+{% block main_content %}
+
+{% comment %} <form  action="" method="GET">
+  <label for="status_filter">Фильтр по статусу заказа:</label>
+  <select id="status_filter" name="status_filter">
+    <option value="">Все</option>
+    {% for item in order_statuses %}
+      <option value="{{ item.pk }}" {% if item == status_filter_item %}selected{% endif %}>{{ item }}</option>
+    {{ item }} {{ status_filter_item }}
+    {% endfor %}
+  </select>
+  <button type="submit" class="btn btn-dark">Применить</button>
+</form> {% endcomment %}
+
+
+
+{% if page_obj.paginator.num_pages > 1 %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo;</a>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                </li>
+            {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&rsaquo;</a>
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+        </ul>
+    </nav>
+{% else %}
+    <br>
+{% endif %}
+
+<table class="table table-sm ">
+  <thead class="table-primary text-center align-middle">
+    <th>№ заказа</th>
+    <th>Статус</th>
+    <th>Создан</th>
+    <th>Изменен</th>
+    <th>Стоимость</th>
+    <th>Действия</th>
+  </thead>
+  <tbody>
+    {% for object in page_obj %}
+      <tr class="align-middle text-center">
+        <td>
+          {{ object.pk }}
+        </td>
+        <td>
+          {{ object.status }}
+        </td>
+        <td class="text-center">
+          {{ object.create_date }}
+        </td>
+        <td class="text-center">
+          {{ object.update_date }}
+        </td>
+        <td class="text-center">
+          {{ object.customer_cart.get_total_price }} BYN
+        </td>
+        <td>
+          <a title="Детали заказа" href="{% url 'orders:detail-order' object.pk %}"><i class="bi bi-eye-fill"></i></a>
+          <a title="Редактирование заказа" href="{% url 'orders:update-order' object.pk %}"><i class="bi bi-pencil-square"></i></a>
+          {% if object.status not in ('Завершен' 'Отменен' 'Запрос отмены') %}
+            <a title="Отмена заказа" href="{% url 'orders:cancel-order' object.pk %}"><i class="bi bi-x-circle-fill"></i></a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br>
+
+{% endblock main_content %}

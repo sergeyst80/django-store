@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth import forms as auth_forms, views as auth_views, models as auth_models, authenticate, login
-from django.contrib.auth.mixins import LoginRequiredMixin
-
 from django.views import generic
 from django.urls import reverse_lazy
 
+from users import urls, forms, models, utils
 
-from users import urls, forms, models
+
 # Create your views here.
+
 
 
 class UserCreationView(generic.CreateView):
@@ -48,12 +48,11 @@ class UserLogoutView(auth_views.LogoutView):
     next_page = reverse_lazy('homepage')    
 
 
-class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
+class UserUpdateView(utils.MyLoginRequiredMixin, generic.UpdateView):
     model = auth_models.User
     form_class = forms.UserProfileForm
     template_name = 'users/update_user.html'
     success_url = reverse_lazy('users:update-user')
-    login_url = reverse_lazy('login')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data()

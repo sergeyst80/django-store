@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.fields.related import ForeignKey, ManyToManyField
+from django.contrib.auth import models as auth_models
 
 
 # Create your models here.
@@ -118,3 +119,45 @@ class BookCard(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class BookComments(models.Model):
+    bookcard = models.ForeignKey(
+        'BookCard',
+        on_delete=models.CASCADE,
+        verbose_name='Книга',
+        related_name='comments',
+        blank=False,
+        null=True
+    )
+
+    user = models.ForeignKey(
+        auth_models.User,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь',
+        related_name='book_comments',
+        blank=False,
+        null=True
+    )
+
+    comment = models.TextField(
+        verbose_name='Комментарий',
+        max_length=1000,
+        blank=True,
+        default=''
+    )
+
+    rating = models.FloatField(
+        verbose_name='Рейтинг',
+        default=None,
+        null=True,
+        blank=True  
+    )
+
+    create_date = models.DateTimeField(
+        verbose_name='Дата создания',
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f'Комментарий #{self.pk} пользователя {self.user.username} к книге {self.bookcard.pk}'

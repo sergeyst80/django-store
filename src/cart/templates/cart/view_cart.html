@@ -16,7 +16,7 @@
 
 {% if request.session.books_in_cart %}
   <form action="{% url 'cart:update-cart' %}">
-    <table class="table table-sm table-striped table-hover">
+    <table class="table table-sm">
       <thead class="table-primary text-center align-middle">
         <th></th>
         <th>Наименование</th>
@@ -62,8 +62,8 @@
       </tfoot>
     </table>
     <br>
-    <button type="submit" name="btn" value="recalculate" class="btn btn-primary">Пересчитать</button>
-    <button type="submit" name="btn" value="checkout" class="btn btn-success">Оформить заказ</button>
+    <button type="submit" name="btn" value="recalculate" class="btn btn-primary btn-sm">Пересчитать</button>
+    <button type="submit" name="btn" value="checkout" class="btn btn-success btn-sm">К оформлению заказа</button>
   </form>
 {% else %}
   <h1 class="text-danger"><b><i>В Вашей корзине отсутствуют товары!</i></b></h1>

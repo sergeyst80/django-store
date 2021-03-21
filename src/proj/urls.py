@@ -23,15 +23,21 @@ from mainapp import views as main_views
 from references import urls as refs_urls
 from users import urls as users_urls
 from cart import urls as cart_urls
+from orders import urls as orders_urls
+from storemanager import urls as manager_urls
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main_views.HomePage.as_view(), name='homepage'),
     path('books-catalog', main_views.BooksCatalog.as_view(), name='books-catalog'),
+    path('detail-book/<int:pk>/', main_views.DetailBookView.as_view(), name='detail-book'),
+    path('send-comment/', main_views.SendBookCommentView.as_view(), name='send-comment'),
     path('references/', include(refs_urls, namespace='references')),
     path('users/', include(users_urls, namespace='users')),
     path('cart/', include(cart_urls, namespace='cart')),
+    path('orders/', include(orders_urls, namespace='orders')),
+    path('manager/', include(manager_urls, namespace='storemanager'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

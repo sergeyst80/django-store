@@ -1,0 +1,27 @@
+{% extends "template_main.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Добавление карточки товара
+{% endblock title %}
+
+{% block page_header %}
+    Введите данные карточки товара:
+{% endblock page_header %}
+
+{% block main_content %}
+
+<form class="form-control-sm" method="POST" action="">
+
+    {% csrf_token %}
+    {{ form|crispy }}
+
+    <br>
+
+    <button type="submit" class="btn btn-success btn-sm" style="width: 200px;">Сохранить</button>
+    <a href="{% url 'storemanager:list-bookcards' %}" class="btn btn-secondary btn-sm" style="width: 200px;">К списку товаров</a>
+    
+</form>
+
+{% endblock main_content %}

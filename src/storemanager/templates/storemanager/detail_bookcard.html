@@ -1,0 +1,182 @@
+{% extends "template_main.html" %}
+
+{% load static %}
+
+{% block title %}
+    Карточка товара
+{% endblock title %}
+
+{% block page_header %}
+  Карточка товара №{{ object.pk }}:
+{% endblock page_header %}
+
+{% block main_content %}
+
+<br>
+
+<table class="table table-sm align-middle">
+  <tbody>
+      <tr>
+        <td>
+          <b>Название:</b>
+        </td>
+        <td>
+          {{ object.name }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Изображение обложки:</b> 
+        </td>
+        <td>
+          <img width="150px"
+            src={% if not object.picture %}
+                  "{% static 'mainapp/img/no_book_photo.png' %}"
+                {% else %}
+                  "/media/{{ object.picture }}"
+                {% endif %}
+          >
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Стоимость:</b>
+        </td>
+        <td>
+          {{ object.cost }}, BYN
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Авторы:</b>
+        </td>
+        <td>
+          {% for item in object.genres.all %}
+            {% if item != object.genres.all.0 %} | {% endif %}
+              {{ item }}
+          {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Серия:</b>
+        </td>
+        <td>
+          {{ object.series }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Жанры:</b>
+        </td>
+        <td>
+          {% for item in object.genres.all %}
+            {% if item != object.genres.all.0 %} | {% endif %}
+              {{ item }}
+          {% endfor %}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Год издания:</b>
+        </td>
+        <td>
+          {{ object.year }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Количество страниц:</b>
+        </td>
+        <td>
+          {{ object.num_pages }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Формат:</b>
+        </td>
+        <td>
+          {{ object.book_format }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>ISBN:</b>
+        </td>
+        <td>
+          {{ object.isbn }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Вес:</b>
+        </td>
+        <td>
+          {{ object.weight }}, гр.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Возрастная категория:</b>
+        </td>
+        <td>
+          {{ object.age_category }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Издательство:</b>
+        </td>
+        <td>
+          {{ object.publisher }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Количество книг в наличии:</b>
+        </td>
+        <td>
+          {{ object.qty }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Доступен к заказу:</b>
+        </td>
+        <td>
+          {% if object.is_active %}Да{% else %}Нет{% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Рейтинг:</b>
+        </td>
+        <td>
+          {{ object.rating }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Дата добавления в каталог:</b>
+        </td>
+        <td>
+          {{ object.create_date }}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>Дата последнего изменения карточки:</b>
+        </td>
+        <td>
+          {{ object.update_date }}
+        </td>
+      </tr>
+  </tbody>
+</table>
+
+<br>
+
+<a href="{% url 'storemanager:list-bookcards' %}" class="btn btn-secondary btn-sm" style="width: 200px;">К списку товаров</a><br><br>
+
+{% endblock main_content %}
