@@ -32,6 +32,7 @@ class BookCard(models.Model):
 
     series = ForeignKey(
         'references.Series',
+        verbose_name='Серия',
         on_delete = models.PROTECT,
         blank=True,
         null=True
@@ -64,7 +65,8 @@ class BookCard(models.Model):
         verbose_name='ISBN',
         max_length=13,
         blank=True,
-        null=True
+        null=True,
+        default=''
     )
 
     weight = models.SmallIntegerField(
@@ -110,7 +112,7 @@ class BookCard(models.Model):
         verbose_name='Дата изменения',
         auto_now=True
     )
-
+    
     def get_authors(self):
         return "\n".join([p.name for p in self.authors.all()])
     

@@ -13,7 +13,7 @@
 {% block main_content %}
 
 <br>
-
+{{ object.picture }}
 <table class="table table-sm align-middle">
   <tbody>
       <tr>
@@ -51,8 +51,8 @@
           <b>Авторы:</b>
         </td>
         <td>
-          {% for item in object.genres.all %}
-            {% if item != object.genres.all.0 %} | {% endif %}
+          {% for item in object.authors.all %}
+            {% if item != object.authors.all.0 %} | {% endif %}
               {{ item }}
           {% endfor %}
         </td>

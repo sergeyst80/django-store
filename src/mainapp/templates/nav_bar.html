@@ -57,6 +57,7 @@
               {% if user.is_staff %}
                 <li>
                   <a class="dropdown-item" href="{% url 'storemanager:list-bookcards' %}"><i class="bi bi-card-list"></i></i> Список товаров</a>
+                  <a class="dropdown-item" href="/s-admin/"><i class="bi bi-lock-fill"></i></i></i> Админ. портал</a>
                 </li>
               {% endif %}
               <li>
@@ -66,16 +67,16 @@
           </ul>
         </li>
         <li>
-          <a href="{% url 'cart:view-cart' %}" class="btn btn-success">
-            <i class="bi bi-cart4"></i>
-              {% if request.session.books_in_cart %}
-                <span class="badge bg-light text-dark">
-                    {{ request.session.books_in_cart }}
-                </span>
-              {% endif %}
-          </a>
-       </li>
+        </li>
       </ul>
+      <a href="{% url 'cart:view-cart' %}" class="btn btn-success">
+        <i class="bi bi-cart4"></i>
+          {% if request.session.books_in_cart %}
+            <span class="badge bg-light text-dark">
+                {{ request.session.books_in_cart }}
+            </span>
+          {% endif %}
+      </a>
     </div>
   </div>
 </nav>

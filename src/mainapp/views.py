@@ -15,8 +15,10 @@ class HomePage(generic.TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        books = self.model.objects.all().order_by('-pk')[0:9]
+        books = self.model.objects.all().order_by('-pk')[0:5]
+        hirated_books = self.model.objects.all().order_by('-rating')[0:5]
         context['objects'] = books
+        context['hirated_books'] = hirated_books
         return context
 
 
@@ -28,28 +30,31 @@ class BooksCatalog(generic.ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        new_books = self.model.objects.all().order_by('-pk')[0:9]
-        context['new_books'] = new_books
+        # new_books = self.model.objects.all().order_by('-pk')[0:5]
+        # context['new_books'] = new_books
+        # context['hirated_books'] = hirated_books
+        search =  self.request.GET.get('search')
         context['search_form'] = forms.CatalogSearchForm(
             initial={
-                'search': self.request.GET.get('search')
+                'search': search
             }
         )
         return context
 
     def get_queryset(self):
-        search = self.request.GET.get('search')
         queryset = super().get_queryset()
+        search = self.request.GET.get('search')
 
         if search:
-            queryset = queryset.filter(
-                Q(name__icontains=search) | 
-                Q(authors__in=refs_models.Authors.objects.filter(name__icontains=search)) | 
-                Q(series__name__icontains=search) |
-                Q(genres__in=refs_models.Genres.objects.filter(name__icontains=search)) |
-                Q(publisher__name__icontains=search)
-            )
-        
+            authors = refs_models.Authors.objects.filter(name__icontains=search)
+
+            if search:
+                queryset = queryset.filter(
+                    Q(authors__in=authors) | 
+                    Q(isbn__icontains=search) |
+                    Q(name__icontains=search)
+                )
+
         return queryset
 
 

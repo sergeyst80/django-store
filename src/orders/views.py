@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from orders import models, forms, utils
 from users import utils as users_utils
@@ -44,10 +45,15 @@ class CreateOrderView(generic.CreateView):
 
 
 class ListOrdersView(users_utils.MyLoginRequiredMixin, generic.ListView):
-    paginate_by = 20
+    paginate_by = 5
     model = models.CustomerOrder
     template_name = 'orders/view_orders.html'
     ordering = '-pk'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['statuses'] = models.OrderStatuses.objects.all()
+        return context
 
     def get_queryset(self):
         customer = users_utils.get_current_customer(self)
@@ -56,6 +62,8 @@ class ListOrdersView(users_utils.MyLoginRequiredMixin, generic.ListView):
             queryset = self.model.objects.filter(customer_cart__customer=customer)
         else:
             queryset = super().get_queryset()
+
+        queryset = queryset.order_by(self.get_ordering())
 
         return queryset
 
@@ -121,9 +129,33 @@ class SendOrderCommentView(generic.RedirectView):
 class CancelOrderView(users_utils.MyLoginRequiredMixin, generic.detail.SingleObjectMixin, generic.TemplateView):
     template_name = 'orders/cancel_order.html'
     model = models.CustomerOrder
-
+    
     def get_context_data(self, **kwargs):
         self.object = self.get_object()
         context = super().get_context_data()
         context['object'] = super().get_object()
         return context
+
+    def get_object(self, queryset=None):
+        obj = super().get_object()
+        
+        if self.request.GET.get('cancel_confirmed'):
+            obj.status = models.OrderStatuses.objects.filter(status='Отмена').first()
+            obj.save()
+            self.extra_context = {'cancel_confirmed': 'True'}
+        return obj
+
+
+class SendOrderStatusView(users_utils.MyLoginRequiredMixin, PermissionRequiredMixin, generic.RedirectView):
+    permission_required = 'orders.change_customerorder'
+
+    def get_redirect_url(self, *args, **kwargs):
+        order_pk = self.request.POST.get('btn')
+        status_pk = self.request.POST.get('status')
+       
+        if users_utils.get_current_customer(self).is_staff and status_pk and order_pk:
+            order = models.CustomerOrder.objects.filter(pk=order_pk).first()
+            order.status = models.OrderStatuses.objects.filter(pk=status_pk).first()
+            order.save()
+        
+        return reverse('orders:view-orders')

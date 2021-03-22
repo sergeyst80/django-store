@@ -28,7 +28,7 @@ from storemanager import urls as manager_urls
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('s-admin/', admin.site.urls),
     path('', main_views.HomePage.as_view(), name='homepage'),
     path('books-catalog', main_views.BooksCatalog.as_view(), name='books-catalog'),
     path('detail-book/<int:pk>/', main_views.DetailBookView.as_view(), name='detail-book'),

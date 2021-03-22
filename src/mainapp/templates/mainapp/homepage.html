@@ -26,13 +26,10 @@
 
 {% block main_content %}
 
-<br>
-<br>
-  
-<div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
+<div id="carouselExampleFade" class="carousel slide carousel-dark carousel-fade" data-bs-ride="carousel">
   <div class="carousel-inner">
     {% for object in objects %}
-      <div class="carousel-item {% if object == objects.0 %}active{% endif %}">
+      <div class="carousel-item {% if object == objects.0 %}active{% endif %}" data-bs-interval="5000">
         <div class="card mb-3 border-light text-dark container-fluid" style="max-width: 480px; text-align: center;">
           <div class="row g-0">
             <div class="col-md-4">
@@ -42,6 +39,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{ object.name }}</h5>
                 <p class="card-text">{{ object.get_authors }}</p>
+                <h5><b>{{ object.cost }} BYN</b></h5>
                 <p class="card-text"><small class="text-muted">
                   <a href="{% url 'cart:add-to-cart' %}?book={{ object.pk }}&next={{ request.get_full_path }}"
                     class="btn btn-success btn-sm text-bottom
@@ -58,14 +56,21 @@
       </div>
     {% endfor %}
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"  data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"  data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
 </div>
+
+
+<br>
+<br>
+  
+
+
 
 {% endblock main_content %}

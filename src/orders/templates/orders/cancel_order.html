@@ -1,29 +1,40 @@
 {% extends "template_main.html" %}
-
+{% load orders_tag %}
 {% load crispy_forms_tags %}
 
 {% block title %}
-    Отмена заказа #{{ object.pk }}
+    Отмена заказа
 {% endblock title %}
 
 {% block page_header %}
-  Введите/измените данные заказа:
+  Отмена заказа
 {% endblock page_header %}
 
 {% block main_content %}
 
 
-
-{{ object }}
-<br>
-
-<form class="form-control-sm" action="" method="POST">
-  {% csrf_token %}
-  {{ form|crispy }}
-  <br>
-  <a href="{% url 'cart:view-cart' %}" class="btn btn-primary btn-sm" style="width: 200px;">В корзину</a>
-  <button type="submit" class="btn btn-success btn-sm" style="width: 200px;">Оформить</button>
+<form class="form-control-sm" action="" method="GET">
+  {% if cancel_confirmed %}
+    <h5 class="text-success">
+      <b>
+        <i>
+          <p>Заказ отменен!</p>
+          <p>В ближайшее время с вами свяжется менеджер для подтверждения отмены.</p>
+        </i>
+      </b>
+    </h5>
+  {% else %}
+    {% if object.status.status|check_order_status %}
+      <h5 class="text-success"><b><i>Заказ уже отменен или завершен!</i></b></h5>
+      <br>
+    {% else %}
+      <h5 class="text-danger"><b><i>Вы действительно хотите отменить {{ object }}?</i></b></h5>
+      <br>
+      <button type="submit" class="btn btn-danger btn-sm" style="width: 200px;">Отменить</button>
+      <input type="hidden" name="cancel_confirmed" value="True">
+    {% endif %}
+  {% endif %}
+  <a href="{% url 'orders:view-orders' %}" class="btn btn-secondary btn-sm" style="width: 200px;">К списку заказов</a>
 </form>
-
 
 {% endblock main_content %}

@@ -12,7 +12,7 @@
 
 {% block main_content %}
 
-<form class="form-control-sm" method="POST" action="">
+<form class="form-control-sm" method="POST" action="" enctype="multipart/form-data">
 
     {% csrf_token %}
     {{ form|crispy }}

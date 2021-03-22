@@ -13,7 +13,7 @@ class CreateBookCardView(users_utils.MyLoginRequiredMixin, PermissionRequiredMix
     model = main_models.BookCard
     template_name = 'storemanager/create_bookcard.html'
     form_class = forms.BookCardForm
-    success_url = reverse_lazy('manager:create-bookcard')
+    success_url = reverse_lazy('storemanager:create-bookcard')
 
 
 class UpdateBookCardView(users_utils.MyLoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
@@ -21,12 +21,12 @@ class UpdateBookCardView(users_utils.MyLoginRequiredMixin, PermissionRequiredMix
     model = main_models.BookCard
     template_name = 'storemanager/update_bookcard.html'
     form_class = forms.BookCardForm
-    success_url = reverse_lazy('manager:update-bookcard')
+    success_url = reverse_lazy('storemanager:list-bookcards')
 
 
 class ListBookCardsView(users_utils.MyLoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
     permission_required = 'mainapp.view_bookcard'
-    paginate_by = 20
+    paginate_by = 5
     model = main_models.BookCard
     template_name = 'storemanager/list_bookcards.html'
 

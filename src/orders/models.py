@@ -27,7 +27,7 @@ class CustomerOrder(models.Model):
         verbose_name='Статус заказа',
         on_delete=models.PROTECT,
         default=1,
-        related_name='statuses'
+        related_name='orders'
     )
 
     email = models.EmailField(

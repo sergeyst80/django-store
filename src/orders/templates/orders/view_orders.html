@@ -1,6 +1,7 @@
 {% extends "template_main.html" %}
-
+{% load orders_tag %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     Список заказов
@@ -23,8 +24,6 @@
   </select>
   <button type="submit" class="btn btn-dark">Применить</button>
 </form> {% endcomment %}
-
-
 
 {% if page_obj.paginator.num_pages > 1 %}
     <nav aria-label="Page navigation example">
@@ -66,7 +65,21 @@
           {{ object.pk }}
         </td>
         <td>
-          {{ object.status }}
+          {% if user.is_staff %}
+            <form class="form-control-sm" action="{% url 'orders:update-status-order' %}" method="POST">
+              {% csrf_token %}
+              <select name="status" id="statuses">
+                {% for item in statuses %}
+                  <option value="{{ item.pk }}" {% if item == object.status %}selected{% endif %}>
+                    {{ item }}
+                  </option>
+                {% endfor %}
+              </select>
+              <button name="btn" value="{{ object.pk }}" type="submit" class="btn btn-success btn-sm bi bi-check-circle"></button>
+            </form>
+          {% else %}
+            {{ object.status }}
+          {% endif %}
         </td>
         <td class="text-center">
           {{ object.create_date }}
@@ -79,8 +92,10 @@
         </td>
         <td>
           <a title="Детали заказа" href="{% url 'orders:detail-order' object.pk %}"><i class="bi bi-eye-fill"></i></a>
-          <a title="Редактирование заказа" href="{% url 'orders:update-order' object.pk %}"><i class="bi bi-pencil-square"></i></a>
-          {% if object.status not in ('Завершен' 'Отменен' 'Запрос отмены') %}
+          {% if user.is_staff or object.status.pk == 1 %}
+            <a title="Редактирование заказа" href="{% url 'orders:update-order' object.pk %}"><i class="bi bi-pencil-square"></i></a>
+          {% endif %}
+          {% if not object.status.status|check_order_status %}
             <a title="Отмена заказа" href="{% url 'orders:cancel-order' object.pk %}"><i class="bi bi-x-circle-fill"></i></a>
           {% endif %}
         </td>
@@ -90,5 +105,6 @@
 </table>
 
 <br>
+
 
 {% endblock main_content %}
